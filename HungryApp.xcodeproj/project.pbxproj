@@ -13,6 +13,8 @@
 		58194A3D274891EC00133032 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58194A3B274891EC00133032 /* Main.storyboard */; };
 		58194A3F274891ED00133032 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58194A3E274891ED00133032 /* Assets.xcassets */; };
 		58194A42274891ED00133032 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 58194A40274891ED00133032 /* LaunchScreen.storyboard */; };
+		58F2921F2748EA9400F4FB20 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58F2921E2748EA9400F4FB20 /* Constant.swift */; };
+		F7CC0B9939A10D2AFC64D800 /* Pods_HungryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F14B8367CC18F5E5FD5D5F4 /* Pods_HungryApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,10 @@
 		58194A3E274891ED00133032 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		58194A41274891ED00133032 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		58194A43274891ED00133032 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		58F2921E2748EA9400F4FB20 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		8AB8A2CAE23F659DF33D5D68 /* Pods-HungryApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HungryApp.debug.xcconfig"; path = "Target Support Files/Pods-HungryApp/Pods-HungryApp.debug.xcconfig"; sourceTree = "<group>"; };
+		9F14B8367CC18F5E5FD5D5F4 /* Pods_HungryApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HungryApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD0D68DF17B211C48192F160 /* Pods-HungryApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HungryApp.release.xcconfig"; path = "Target Support Files/Pods-HungryApp/Pods-HungryApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7CC0B9939A10D2AFC64D800 /* Pods_HungryApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +49,8 @@
 			children = (
 				58194A34274891EC00133032 /* HungryApp */,
 				58194A33274891EC00133032 /* Products */,
+				BE0F068CC65291475E0CC7FF /* Pods */,
+				C788C9ADB75E9330A8D7DFB2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -57,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				58194A35274891EC00133032 /* AppDelegate.swift */,
+				58F2921E2748EA9400F4FB20 /* Constant.swift */,
 				58194A37274891EC00133032 /* SceneDelegate.swift */,
 				58194A39274891EC00133032 /* ViewController.swift */,
 				58194A3B274891EC00133032 /* Main.storyboard */,
@@ -67,6 +77,23 @@
 			path = HungryApp;
 			sourceTree = "<group>";
 		};
+		BE0F068CC65291475E0CC7FF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8AB8A2CAE23F659DF33D5D68 /* Pods-HungryApp.debug.xcconfig */,
+				CD0D68DF17B211C48192F160 /* Pods-HungryApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C788C9ADB75E9330A8D7DFB2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9F14B8367CC18F5E5FD5D5F4 /* Pods_HungryApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +101,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58194A46274891ED00133032 /* Build configuration list for PBXNativeTarget "HungryApp" */;
 			buildPhases = (
+				348F726A04248B4F4D44F8A9 /* [CP] Check Pods Manifest.lock */,
 				58194A2E274891EC00133032 /* Sources */,
 				58194A2F274891EC00133032 /* Frameworks */,
 				58194A30274891EC00133032 /* Resources */,
+				AEB5FCE1522E76A2E8BA9B8E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -133,6 +162,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		348F726A04248B4F4D44F8A9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HungryApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AEB5FCE1522E76A2E8BA9B8E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HungryApp/Pods-HungryApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HungryApp/Pods-HungryApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HungryApp/Pods-HungryApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		58194A2E274891EC00133032 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -141,6 +212,7 @@
 				58194A3A274891EC00133032 /* ViewController.swift in Sources */,
 				58194A36274891EC00133032 /* AppDelegate.swift in Sources */,
 				58194A38274891EC00133032 /* SceneDelegate.swift in Sources */,
+				58F2921F2748EA9400F4FB20 /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +356,7 @@
 		};
 		58194A47274891ED00133032 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8AB8A2CAE23F659DF33D5D68 /* Pods-HungryApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -297,6 +370,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -306,12 +380,13 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		58194A48274891ED00133032 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD0D68DF17B211C48192F160 /* Pods-HungryApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -325,6 +400,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -334,7 +410,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
