@@ -29,7 +29,8 @@ class UserService {
     }
 
     fun getUser(id: Long): Response {
-        val user = userRepository.findUserById(id)
+        val user: User? = userRepository.findUserById(id)
+        user ?: return Response(result = Result.FAILURE.name, message = "존재하지 않는 유저 입니다.", meta = {})
         val response = Response(result = Result.SUCCESS.name, message = null, meta = {})
         response.addData(user)
         return response
