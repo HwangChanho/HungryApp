@@ -1,22 +1,22 @@
 #!/bin/bash
 
-REPOSITORY=/home/ubuntu/app/git
+REPOSITORY=/home/ubuntu/apps/HungryApp
 
-cd $REPOSITORY/springboot-webservice/
+cd $REPOSITORY
 
 echo "> Git Pull"
 
 git pull
 
-echo "> 프로젝트 Build 시작"
+echo "> Start Spring Boot jar Build"
 
-./gradlew bootjar
+./gradlew build
 
-echo "> Build 파일 복사"
+echo "> Copy jar"
 
 cp ./build/libs/*.jar $REPOSITORY/
 
-echo "> 현재 구동중인 애플리케이션 pid 확인"
+echo "> check current running server pid"
 
 CURRENT_PID=$(pgrep -f springboot-webservice)
 
@@ -30,7 +30,7 @@ else
     sleep 5
 fi
 
-echo "> 새 어플리케이션 배포"
+echo "> run new jar"
 
 JAR_NAME=$(ls $REPOSITORY/ |grep 'springboot-webservice' | tail -n 1)
 
