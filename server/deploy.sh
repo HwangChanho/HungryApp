@@ -1,6 +1,7 @@
 #!/bin/bash
 
 REPOSITORY=/home/ubuntu/apps/HungryApp
+JAR=/home/ubuntu/apps/
 
 cd $REPOSITORY
 
@@ -14,7 +15,7 @@ echo "> Start Spring Boot jar Build"
 
 echo "> Copy jar"
 
-cp ./build/libs/*.jar $REPOSITORY/
+cp ./build/libs/*.jar $JAR/
 
 echo "> check current running server pid"
 
@@ -32,8 +33,8 @@ fi
 
 echo "> run new jar"
 
-JAR_NAME=$(ls $REPOSITORY/ |grep 'springboot-webservice' | tail -n 1)
+JAR_NAME=$(ls $JAR/ |grep 'springboot-webservice' | tail -n 1)
 
 echo "> JAR Name: $JAR_NAME"
 
-nohup java -jar $REPOSITORY/$JAR_NAME &
+nohup java -jar $JAR/$JAR_NAME &
