@@ -2,12 +2,10 @@ package com.server.hungry.entity
 
 import com.server.hungry.dto.CreateUserDTO
 import com.server.hungry.dto.ReadUserDTO
+import com.sun.istack.Nullable
 import org.hibernate.Hibernate
 import java.time.OffsetDateTime
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 /**
  * User
@@ -23,7 +21,13 @@ data class User(
     val email: String,
     val password: String,
     val createdDate: OffsetDateTime,
-    var updatedDate: OffsetDateTime? = null
+    var updatedDate: OffsetDateTime? = null,
+
+    @OneToOne(cascade = [CascadeType.ALL])
+    val photo: Photo,
+
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
+    val store: MutableList<Store> = mutableListOf()
 ) {
     fun toReadUserDto(): ReadUserDTO {
         return ReadUserDTO(
@@ -31,7 +35,8 @@ data class User(
             name = name,
             email = email,
             createdDate = createdDate,
-            updatedDate = updatedDate
+            updatedDate = updatedDate,
+            photo = photo,
         )
     }
 
@@ -40,6 +45,7 @@ data class User(
             name = name,
             email = email,
             password = password,
+            photo = photo,
         )
     }
 

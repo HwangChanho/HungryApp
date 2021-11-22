@@ -1,5 +1,7 @@
 package com.server.hungry.dto
 
+import com.server.hungry.entity.Photo
+import com.server.hungry.entity.Store
 import com.server.hungry.entity.User
 import java.time.OffsetDateTime
 
@@ -15,24 +17,27 @@ data class LoginUserDTO(
 )
 
 data class ReadUserDTO(
-    val id: Long? = null,
+    val id: Long?,
     val name: String,
     val email: String,
     val createdDate: OffsetDateTime,
-    val updatedDate: OffsetDateTime?
+    val updatedDate: OffsetDateTime?,
+    val photo: Photo,
 )
 
 data class CreateUserDTO(
     val name: String,
     val email: String,
     val password: String,
+    val photo: Photo,
 ) {
     fun toEntity(): User {
         return User(
             name = name,
             email = email,
             password = password,
-            createdDate = OffsetDateTime.now()
+            createdDate = OffsetDateTime.now(),
+            photo = photo,
         )
     }
 }
