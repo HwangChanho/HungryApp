@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPOSITORY=/home/ubuntu/apps/HungryApp
+REPOSITORY=/home/ubuntu/apps/HungryApp/server
 JAR=/home/ubuntu/apps/
 
 cd $REPOSITORY
