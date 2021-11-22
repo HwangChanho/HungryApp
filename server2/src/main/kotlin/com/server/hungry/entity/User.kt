@@ -1,18 +1,21 @@
-package com.server.hungry.entity
+package com.server.assistant.entity
 
-import com.server.hungry.dto.CreateUserDTO
-import com.server.hungry.dto.ReadUserDTO
-import com.sun.istack.Nullable
+import com.server.assistant.dto.CreateUserDTO
+import com.server.assistant.dto.ReadUserDTO
 import org.hibernate.Hibernate
 import java.time.OffsetDateTime
-import javax.persistence.*
+import javax.persistence.Entity
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
 
 /**
  * User
  * 주소
  * GitHub : http://github.com/azqazq195
- * Created by azqazq195@gmail.com on 2021-11-20
+ * Created by azqazq195@gmail.com on 2021-10-31
  */
+
 @Entity
 data class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +24,7 @@ data class User(
     val email: String,
     val password: String,
     val createdDate: OffsetDateTime,
-    var updatedDate: OffsetDateTime? = null,
-
-    @OneToOne(cascade = [CascadeType.ALL])
-    val photo: Photo,
-
-    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
-    val store: MutableList<Store> = mutableListOf()
+    var updatedDate: OffsetDateTime? = null
 ) {
     fun toReadUserDto(): ReadUserDTO {
         return ReadUserDTO(
@@ -35,8 +32,7 @@ data class User(
             name = name,
             email = email,
             createdDate = createdDate,
-            updatedDate = updatedDate,
-            photo = photo,
+            updatedDate = updatedDate
         )
     }
 
@@ -45,7 +41,6 @@ data class User(
             name = name,
             email = email,
             password = password,
-            photo = photo,
         )
     }
 

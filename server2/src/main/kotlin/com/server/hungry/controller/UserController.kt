@@ -1,9 +1,8 @@
-package com.server.hungry.controller
+package com.server.assistant.controller
 
-import com.server.hungry.dto.CreateUserDTO
-import com.server.hungry.dto.LoginUserDTO
-import com.server.hungry.service.UserService
-import mu.KotlinLogging
+import com.server.assistant.dto.CreateUserDTO
+import com.server.assistant.dto.LoginUserDTO
+import com.server.assistant.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -12,9 +11,8 @@ import org.springframework.web.bind.annotation.*
  * UserController
  * 주소
  * GitHub : http://github.com/azqazq195
- * Created by azqazq195@gmail.com on 2021-11-20
+ * Created by azqazq195@gmail.com on 2021-10-31
  */
-private val logger = KotlinLogging.logger {  }
 @RestController
 class UserController {
 
@@ -39,10 +37,5 @@ class UserController {
     @PostMapping("/login", produces = ["application/json"])
     fun login(@RequestBody loginUserDTO: LoginUserDTO): ResponseEntity<Any> {
         return ResponseEntity.ok().body(userService.login(loginUserDTO))
-    }
-
-    @DeleteMapping("/user/{id}", produces = ["application/json"])
-    fun delete(@PathVariable id: Long): ResponseEntity<Any> {
-        return ResponseEntity.ok().body(userService.deleteUser(id))
     }
 }
