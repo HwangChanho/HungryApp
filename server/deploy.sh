@@ -11,7 +11,7 @@ git pull
 
 echo "> Start Spring Boot jar Build"
 
-./gradlew build
+./gradlew bootjar
 
 echo "> Copy jar"
 
