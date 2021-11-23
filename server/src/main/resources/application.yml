@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mariadb://database-1.caeoqxd3ize6.ap-northeast-2.rds.amazonaws.com/Hungry
+    url: jdbc:mariadb://database-1.caeoqxd3ize6.ap-northeast-2.rds.amazonaws.com:3306/Hungry
     driver-class-name: org.mariadb.jdbc.Driver
     username: admin
     password: qkrrhkwkd5gh
