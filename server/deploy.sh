@@ -13,9 +13,10 @@ echo "> Start Spring Boot jar Build"
 
 ./gradlew bootjar
 
-echo "> Copy jar"
+echo "> Move jar"
 
-cp ./build/libs/*.jar $JAR/
+rm $JAR/*.jar
+mv ./build/libs/*.jar $JAR/
 
 echo "> check current running server pid"
 
