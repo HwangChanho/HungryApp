@@ -1,7 +1,7 @@
 #!/bin/bash
 
 REPOSITORY=/home/ubuntu/apps/HungryApp/server
-JAR=/home/ubuntu/apps/
+JAR=/home/ubuntu/apps
 
 cd $REPOSITORY
 
