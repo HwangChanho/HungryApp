@@ -30,22 +30,63 @@
                                                 </constraints>
                                                 <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                                             </searchBar>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="10" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nrK-iF-ONE" customClass="DynamicHeightTableView" customModule="HungryApp" customModuleProvider="target">
-                                                <rect key="frame" x="20" y="64" width="374" height="10"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="374" placeholderIntrinsicHeight="10" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="nrK-iF-ONE" customClass="DynamicHeightTableView" customModule="HungryApp" customModuleProvider="target">
+                                                <rect key="frame" x="5" y="64" width="404" height="10"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="B2e-3b-wu6"/>
                                                 </constraints>
                                             </tableView>
+                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nkc-Qk-tvK">
+                                                <rect key="frame" x="5" y="763" width="404" height="1"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="9lA-6l-Dfc"/>
+                                                </constraints>
+                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eQF-IE-h9Q">
+                                                    <size key="itemSize" width="400" height="166"/>
+                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                </collectionViewFlowLayout>
+                                                <cells>
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="KZe-fQ-T23" customClass="DetailInfoCollectionViewCell" customModule="HungryApp" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="-82.5" width="400" height="166"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                                            <rect key="frame" x="0.0" y="0.0" width="400" height="166"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </view>
+                                                    </collectionViewCell>
+                                                </cells>
+                                            </collectionView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XDO-CL-gCe">
+                                                <rect key="frame" x="354" y="703" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="PMJ-hz-e8L"/>
+                                                    <constraint firstAttribute="width" constant="50" id="uPu-ic-GsB"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="Ellipse1">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="10"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="nowLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="hly-oV-FEU"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="nrK-iF-ONE" firstAttribute="top" secondItem="NNI-Qt-BWt" secondAttribute="bottom" id="05Y-r1-dUW"/>
                                             <constraint firstItem="NNI-Qt-BWt" firstAttribute="top" secondItem="KHb-Yo-Olh" secondAttribute="top" constant="20" id="7JI-vn-MZD"/>
-                                            <constraint firstAttribute="trailing" secondItem="nrK-iF-ONE" secondAttribute="trailing" constant="20" id="Fk1-d9-dzA"/>
-                                            <constraint firstItem="nrK-iF-ONE" firstAttribute="leading" secondItem="KHb-Yo-Olh" secondAttribute="leading" constant="20" id="IVn-hF-joW"/>
+                                            <constraint firstAttribute="trailing" secondItem="XDO-CL-gCe" secondAttribute="trailing" constant="10" id="CCu-PZ-tas"/>
+                                            <constraint firstAttribute="trailing" secondItem="nrK-iF-ONE" secondAttribute="trailing" constant="5" id="Fk1-d9-dzA"/>
+                                            <constraint firstItem="nrK-iF-ONE" firstAttribute="leading" secondItem="KHb-Yo-Olh" secondAttribute="leading" constant="5" id="IVn-hF-joW"/>
                                             <constraint firstAttribute="trailing" secondItem="NNI-Qt-BWt" secondAttribute="trailing" constant="20" id="IfG-7R-Gsp"/>
+                                            <constraint firstAttribute="trailing" secondItem="nkc-Qk-tvK" secondAttribute="trailing" constant="5" id="JkA-ky-nlf"/>
+                                            <constraint firstAttribute="bottom" secondItem="nkc-Qk-tvK" secondAttribute="bottom" constant="5" id="Oxh-fp-m4W"/>
+                                            <constraint firstItem="nkc-Qk-tvK" firstAttribute="top" secondItem="XDO-CL-gCe" secondAttribute="bottom" constant="10" id="k0Q-az-5kT"/>
                                             <constraint firstItem="NNI-Qt-BWt" firstAttribute="leading" secondItem="KHb-Yo-Olh" secondAttribute="leading" constant="20" id="lyX-Co-z1S"/>
+                                            <constraint firstItem="nkc-Qk-tvK" firstAttribute="leading" secondItem="KHb-Yo-Olh" secondAttribute="leading" constant="5" id="rew-10-OKl"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="showCompass" value="YES"/>
@@ -75,10 +116,12 @@
                             <constraint firstItem="rb7-jA-EPu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Xd1-nE-PIC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="house" catalog="system" id="0Sn-Jb-zqf"/>
+                    <tabBarItem key="tabBarItem" title="" image="house" id="0Sn-Jb-zqf"/>
                     <navigationItem key="navigationItem" id="ZGv-D0-L2v"/>
                     <connections>
+                        <outlet property="collectionView" destination="nkc-Qk-tvK" id="U2j-SB-vA6"/>
                         <outlet property="mapView" destination="KHb-Yo-Olh" id="rXq-oW-DMg"/>
+                        <outlet property="nowLocationButton" destination="XDO-CL-gCe" id="Vdd-bV-FvJ"/>
                         <outlet property="searchBar" destination="NNI-Qt-BWt" id="hpQ-qY-Jng"/>
                         <outlet property="searchedTableView" destination="nrK-iF-ONE" id="oIJ-GJ-XcO"/>
                     </connections>
@@ -91,7 +134,7 @@
         <scene sceneID="PNE-qU-ZXz">
             <objects>
                 <viewControllerPlaceholder storyboardName="Setting" id="Hpg-y1-qwJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="person" catalog="system" id="V1R-f2-2Wp"/>
+                    <tabBarItem key="tabBarItem" title="" image="human" id="V1R-f2-2Wp"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bbE-ND-hpk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -106,7 +149,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cZr-DY-7VA">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <tabBarAppearance key="standardAppearance"/>
                     </tabBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="tHv-JC-xUO"/>
@@ -123,7 +166,7 @@
         <scene sceneID="qMX-tt-rd0">
             <objects>
                 <viewControllerPlaceholder storyboardName="Restaurant" id="q3O-vg-UzS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="pin" catalog="system" id="emz-6D-1Uk"/>
+                    <tabBarItem key="tabBarItem" title="" image="location" id="emz-6D-1Uk"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fd8-Zj-Gdh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -133,7 +176,7 @@
         <scene sceneID="hUy-Xh-H60">
             <objects>
                 <viewControllerPlaceholder storyboardName="Register" id="LM8-ge-lZL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="plus.circle" catalog="system" id="3Ts-wE-BRP"/>
+                    <tabBarItem key="tabBarItem" title="" image="plus" id="3Ts-wE-BRP"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYw-KP-70Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -141,10 +184,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="house" catalog="system" width="128" height="106"/>
-        <image name="person" catalog="system" width="128" height="117"/>
-        <image name="pin" catalog="system" width="119" height="128"/>
-        <image name="plus.circle" catalog="system" width="128" height="121"/>
+        <image name="Ellipse1" width="46" height="45"/>
+        <image name="house" width="32" height="32"/>
+        <image name="human" width="32" height="32"/>
+        <image name="location" width="32" height="32"/>
+        <image name="plus" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

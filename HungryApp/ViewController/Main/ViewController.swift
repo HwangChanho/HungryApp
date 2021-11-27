@@ -15,44 +15,69 @@ class ViewController: UIViewController {
     var resultVC = UITableViewController()
     
     var aData: [addressDataByKeyworld] = []
+    var selectedData: addressDataByKeyworld?
     var filteredAData: [addressDataByKeyworld] = []
     var totalCount = 0
     var page = 0
     var searchText = ""
+    var markerToggle = false
+    
+    let infoWindow = NMFInfoWindow()
+    let dataSource = NMFInfoWindowDefaultTextSource.data()
+    let marker = NMFMarker()
     
     @IBOutlet weak var mapView: NMFMapView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchedTableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var nowLocationButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setUpMapView()
+        self.setMapView()
         self.setDelegate()
         self.setSearchBar()
         self.setNib()
         self.setTableView()
+        self.setCollectionView()
+        self.setButtonUI()
+        
+        let nowPosition = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+        mapView.moveCamera(nowPosition, completion: nil)
     }
     
     //MARK: - UISetup
     
+    func setButtonUI() {
+        nowLocationButton.setTitle("", for: .normal)
+        nowLocationButton.adjustsImageWhenHighlighted = false
+    }
+    
     func setNib() {
         let nibName = UINib(nibName: SearchTableViewCell.identifier, bundle: nil)
         self.searchedTableView.register(nibName, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        
+        let collectionViewNibName = UINib(nibName: DetailInfoCollectionViewCell.identifier, bundle: nil)
+        self.collectionView.register(collectionViewNibName, forCellWithReuseIdentifier: DetailInfoCollectionViewCell.identifier)
     }
     
     func setDelegate() {
         self.locationManager = CLLocationManager()
         self.locationManager.delegate = self
+        
         self.searchBar.delegate = self
+        
         self.searchedTableView.delegate = self
         self.searchedTableView.dataSource = self
-        self.searchedTableView.prefetchDataSource = self
+        //self.searchedTableView.prefetchDataSource = self
+        
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
     }
     
-    func setUpMapView() {
+    func setMapView() {
         self.mapView.addCameraDelegate(delegate: self)
-        
         self.mapView.isNightModeEnabled = true
         self.mapView.mapType = .basic
         self.mapView.positionMode = .direction
@@ -78,39 +103,25 @@ class ViewController: UIViewController {
         searchedTableView.separatorStyle = .none
         searchedTableView.isHidden = true
         searchedTableView.flashScrollIndicators()
-        searchedTableView.layer.cornerRadius = 15
+    }
+    
+    func setCollectionView() {
+        collectionView.isHidden = true
+        collectionView.layer.cornerRadius = 15
+    }
+    
+    //MARK: - Action
+    
+    @IBAction func nowLocationButtonPressed(_ sender: UIButton) {
+        nowLocationButton.setImage(UIImage(named: "Ellipse1"), for: .normal)
+        
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+        mapView.moveCamera(cameraUpdate)
     }
     
     //MARK: - APISetup
     
-    func fetchKakaoLocalAPIAddressData(text: String) {
-        print(#function)
-        aData.removeAll()
-        KakaoLocalAPIManager.shared.getKakaoLocalApiData(url: Constants.requestAPI.requestByAddress, keyword: text) { code, json in
-            
-            let countItem = json["meta"]["total_count"].intValue
-            self.totalCount = countItem
-            
-            if countItem < 10 { // 열개 안 으로 조회될때 표출
-                for item in json["documents"].arrayValue {
-                    
-                    let addressName = item["address_name"].string ?? ""
-                    let roadAdressName = item["road_address"].string ?? ""
-                    let longitudeX = item["x"].string ?? ""
-                    let latitudeY = item["y"].string ?? ""
-                    
-                    let data = addressData(address_name: addressName, x: longitudeX, y: latitudeY, road_name: roadAdressName)
-                    
-                    //self.aData.append(data)
-                    
-                    self.searchedTableView.reloadData()
-                }
-            }
-        }
-    }
-    
     func fetchKakaoLocalAPIData(text: String, x: String?, y: String?, page: String?) {
-        print(#function)
         KakaoLocalAPIManager.shared.getKakaoLocalApiData(url: Constants.requestAPI.requestByAddressAndKeyword, keyword: text, x: x, y: y, page: page) { code, json in
             
             let countItem = json["meta"]["total_count"].intValue
@@ -118,7 +129,6 @@ class ViewController: UIViewController {
             self.totalCount = countItem
             self.page = page
             
-            //if countItem < 30 { // 열개 안 으로 조회될때 표출
             for item in json["documents"].arrayValue {
                 
                 let addressName = item["address_name"].string
@@ -143,7 +153,6 @@ class ViewController: UIViewController {
                     break;
                 }
             }
-            //}
         }
     }
     
@@ -169,12 +178,25 @@ extension ViewController: NMFMapViewCameraDelegate {
         //        let cameraPosition = mapView.cameraPosition
         //        print(cameraPosition.target.lat, cameraPosition.target.lng)
     }
+    
+    //    func onMapOverlay(_ poiDataOverlay: NMapPOIdataOverlay!, viewForCalloutOverlayItem poiItem: NMapPOIitem!, calloutPosition: UnsafeMutablePointer<CGPoint>!) -> UIView!{
+    //
+    //    }
+    
+    // 지도를 탭하면 정보 창을 닫음
+    //    func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+    //        print("map tapped")
+    //        infoWindow.close()
+    //        self.collectionView.isHidden = true
+    //        self.collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 1).isActive = true
+    //        self.view.endEditing(true)
+    //        //self.mapView.endEditing(true)
+    //    }
 }
 
 //MARK: - LocationManagerDelegate
 
 extension ViewController: CLLocationManagerDelegate {
-    
     // iOS 버전에 따른 분기 처리와 iOS 위치 서비스 여부 확인
     func checkUserLocationServicesAuthorization() {
         let authorizationStatus: CLAuthorizationStatus
@@ -234,18 +256,9 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print(#function)
         
-        print("in :", locationManager.location?.coordinate ?? "")
-        
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
-        
-        //cameraUpdate.animation = .easeIn
-        mapView.moveCamera(cameraUpdate)
-        
-        // mark
-        cameraPositon = mapView.cameraPosition
-        print("cameraPosition : ", cameraPositon)
-        
-        setMarker(lat: cameraPositon.target.lat, lng: cameraPositon.target.lng)
+        //        print("loc in :", locationManager.location?.coordinate ?? "")
+        //        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+        //        mapView.moveCamera(cameraUpdate)
     }
     
     // 위치 접근이 실패했을 경우
@@ -279,31 +292,65 @@ extension ViewController: CLLocationManagerDelegate {
         })
     }
     
-    func setMarker(lat: Double, lng: Double) {
-        let marker = NMFMarker()
+    func setMarker(lat: Double, lng: Double, type: Int, infoWindowText: String?) {
         marker.position = NMGLatLng(lat: lat, lng: lng)
-        marker.iconImage = NMF_MARKER_IMAGE_BLACK
+        
+        switch type {
+        case 1:
+            marker.iconImage = NMFOverlayImage(name: "Group2")
+        case 2:
+            marker.iconImage = NMFOverlayImage(name: "Group1")
+        case 3:
+            marker.iconImage = NMFOverlayImage(name: "Ellipse1")
+        case 4:
+            marker.iconImage = NMFOverlayImage(name: "locationSelected")
+        default:
+            print("Wrong type")
+        }
+        
+        if infoWindowText != nil {
+            self.dataSource.title = infoWindowText!
+            self.infoWindow.dataSource = self.dataSource
+        }
+        
         marker.mapView = mapView
+        marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
+            print("마커 터치")
+            self.markerToggle = true
+            if self.marker.infoWindow == nil {
+                // 현재 마커에 정보 창이 열려있지 않을 경우 열기
+                self.infoWindow.open(with: self.marker)
+                self.collectionView.isHidden = false
+                self.collectionView.heightAnchor.constraint(equalToConstant: 170).isActive = true
+                self.view.endEditing(true)
+            } else {
+                // 이미 현재 마커에 정보 창이 열려있을 경우 닫음
+                self.infoWindow.close()
+                self.collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 1).isActive = true
+                self.collectionView.isHidden = true
+            }
+            return true // 이벤트 소비, -mapView:didTapMap:point 이벤트는 발생하지 않음
+        }
         
-        let infoWindow = NMFInfoWindow()
-        //        let dataSource = NMFInfoWindowDefaultTextSource.data()
-        //        infoWindow.dataSource = dataSource
-        
-        infoWindow.open(with: marker)
     }
     
 }
 
 //MARK: - ResultTableViewDelegate
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return aData.count
+        if aData.count > 10 {
+            return 10
+        } else {
+            return aData.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell else { return UITableViewCell() }
-        
+        print("tableview indexPath : ", indexPath)
+        print("aData : ", aData)
         let row = aData[indexPath.row]
         
         cell.searchedLabel.text = row.place_name
@@ -320,33 +367,73 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource, UITableVie
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("am i end?")
-        searchedTableView.isHidden = true
+        self.searchedTableView.isHidden = true
+        
+        if self.collectionView.isHidden == false && markerToggle == false {
+            self.infoWindow.close()
+            self.collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 1).isActive = true
+            self.collectionView.isHidden = true
+        }
+        
+        if self.collectionView.isHidden == false && self.markerToggle == true{
+            self.markerToggle = false
+            
+        }
     }
     
+    // 테이블뷰 클릭시 이벤트
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("selected : ", indexPath.row)
+        let row = aData[indexPath.row]
+        
+        selectedData = aData[indexPath.row]
+        
+        // 해당위치로 카메라 이동
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: Double(row.y)!, lng: Double(row.x)!))
+        mapView.moveCamera(cameraUpdate)
+        
+        // mark
+        cameraPositon = mapView.cameraPosition
+        setMarker(lat: cameraPositon.target.lat, lng: cameraPositon.target.lng, type: 4, infoWindowText: selectedData?.place_name)
+        // show detail
+        self.infoWindow.open(with: self.marker)
+        self.collectionView.isHidden = false
+        self.collectionView.heightAnchor.constraint(equalToConstant: 170).isActive = true
+        self.view.endEditing(true)
+        
+        collectionView.reloadData()
+        
+        aData.removeAll()
+        searchedTableView.reloadData()
+        searchedTableView.isHidden = true
+        searchBar.text = ""
     }
     
+    // 검색시 나타나는 테이블뷰 높이
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
     }
     
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        for indexPath in indexPaths {
-            if aData.count - 1 == indexPath.row {
-                page += 1
-                fetchKakaoLocalAPIData(text: self.searchText, x: nil, y: nil, page: String(page))
-                print("indexPath: \(indexPath)", page)
-                // 서버에 요청
-            } else if page == totalCount {
-                print("end")
-            }
-        }
+    // 테이블뷰 섹션 높이
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude // 이게 CGFloat 양수 최소값 상수
     }
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        <#code#>
-//    }
+    //    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+    //        for indexPath in indexPaths {
+    //            if aData.count - 1 == indexPath.row {
+    //                page += 1
+    //                fetchKakaoLocalAPIData(text: self.searchText, x: nil, y: nil, page: String(page))
+    //                print("indexPath: \(indexPath)", page)
+    //                // 서버에 요청
+    //            } else if page == totalCount {
+    //                print("end")
+    //            }
+    //        }
+    //    }
+    
+    //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    //        <#code#>
+    //    }
 }
 
 //MARK: - SearchBarDelegate
@@ -384,6 +471,42 @@ extension ViewController: UISearchBarDelegate {
     
     func searchAddress(searchText: String) {
         fetchKakaoLocalAPIData(text: searchText, x: nil, y: nil, page: nil)
+    }
+}
+
+//MARK: - CollectionView Delegate
+
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // db에서 사진 갯수 가저와서 표출 or 1
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailInfoCollectionViewCell.identifier, for: indexPath) as? DetailInfoCollectionViewCell else { return UICollectionViewCell() }
+        
+        // 단일 결과일 경우
+        cell.placeNameLabel.text = selectedData?.place_name
+        cell.categoryNameLabel.text = selectedData?.category_group_name
+        cell.addressLabel.text = selectedData?.address_name
+        cell.placeURLButton.setTitle(selectedData?.place_url, for: .normal)
+        
+        return cell
+    }
+    
+    // 컬렉션뷰 사이즈 설정 UICollectionViewDelegateFlowLayout
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        var screenWidth = UIScreen.main.bounds.width
+        
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            let leftPadding = window?.safeAreaInsets.left ?? 0
+            let rightPadding = window?.safeAreaInsets.right ?? 0
+            screenWidth -= (leftPadding + rightPadding)
+        }
+        
+        return CGSize(width: screenWidth - 10, height: 170)
     }
 }
 
