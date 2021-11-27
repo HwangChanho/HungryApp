@@ -21,6 +21,8 @@ class SettingViewController: UIViewController {
 
         let nibName = UINib(nibName: SettingTableViewCell.identifier, bundle: nil)
         self.tableView.register(nibName, forCellReuseIdentifier: SettingTableViewCell.identifier)
+        
+        self.tabBarController?.tabBar.backgroundColor = UIColor(named: "Color")
     }
     
     func setDelegate() {

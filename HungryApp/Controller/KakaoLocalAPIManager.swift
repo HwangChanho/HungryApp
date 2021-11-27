@@ -66,6 +66,7 @@ class KakaoLocalAPIManager {
         if (x != nil) && (y != nil) {
             formattedURL = url + "&y=" + y! + "&x=" + x! + "&radius=" + String(radius)
         }
+        
         DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
             AF.request(formattedURL, method: .get, parameters: parameters, headers: header)
                 .responseJSON { response in

@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +13,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="HungryApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainView" id="BYZ-38-t0r" customClass="ViewController" customModule="HungryApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -37,10 +38,10 @@
                                                 </constraints>
                                             </tableView>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nkc-Qk-tvK">
-                                                <rect key="frame" x="5" y="763" width="404" height="1"/>
+                                                <rect key="frame" x="5" y="594" width="404" height="170"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="1" id="9lA-6l-Dfc"/>
+                                                    <constraint firstAttribute="height" constant="170" id="9lA-6l-Dfc"/>
                                                 </constraints>
                                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eQF-IE-h9Q">
                                                     <size key="itemSize" width="400" height="166"/>
@@ -49,8 +50,8 @@
                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                 </collectionViewFlowLayout>
                                                 <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="KZe-fQ-T23" customClass="DetailInfoCollectionViewCell" customModule="HungryApp" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="-82.5" width="400" height="166"/>
+                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DetailInfoCollectionViewCell" id="KZe-fQ-T23" customClass="DetailInfoCollectionViewCell" customModule="HungryApp" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="2" width="400" height="166"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                             <rect key="frame" x="0.0" y="0.0" width="400" height="166"/>
@@ -60,7 +61,7 @@
                                                 </cells>
                                             </collectionView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XDO-CL-gCe">
-                                                <rect key="frame" x="354" y="703" width="50" height="50"/>
+                                                <rect key="frame" x="354" y="709" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="PMJ-hz-e8L"/>
                                                     <constraint firstAttribute="width" constant="50" id="uPu-ic-GsB"/>
@@ -84,7 +85,7 @@
                                             <constraint firstAttribute="trailing" secondItem="NNI-Qt-BWt" secondAttribute="trailing" constant="20" id="IfG-7R-Gsp"/>
                                             <constraint firstAttribute="trailing" secondItem="nkc-Qk-tvK" secondAttribute="trailing" constant="5" id="JkA-ky-nlf"/>
                                             <constraint firstAttribute="bottom" secondItem="nkc-Qk-tvK" secondAttribute="bottom" constant="5" id="Oxh-fp-m4W"/>
-                                            <constraint firstItem="nkc-Qk-tvK" firstAttribute="top" secondItem="XDO-CL-gCe" secondAttribute="bottom" constant="10" id="k0Q-az-5kT"/>
+                                            <constraint firstAttribute="bottom" secondItem="XDO-CL-gCe" secondAttribute="bottom" constant="10" id="jM1-EE-ymV"/>
                                             <constraint firstItem="NNI-Qt-BWt" firstAttribute="leading" secondItem="KHb-Yo-Olh" secondAttribute="leading" constant="20" id="lyX-Co-z1S"/>
                                             <constraint firstItem="nkc-Qk-tvK" firstAttribute="leading" secondItem="KHb-Yo-Olh" secondAttribute="leading" constant="5" id="rew-10-OKl"/>
                                         </constraints>
@@ -130,6 +131,83 @@
             </objects>
             <point key="canvasLocation" x="1940.5797101449277" y="75.669642857142847"/>
         </scene>
+        <!--Web View Controller-->
+        <scene sceneID="aBU-wl-DfL">
+            <objects>
+                <viewController storyboardIdentifier="WebViewController" id="Psr-FG-Jzm" customClass="WebViewController" customModule="HungryApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BTs-B3-zgL">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Mq7-nf-cIT">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="6hm-K5-E8M"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="pgu-t8-LXU"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGI-pL-zbf">
+                                <rect key="frame" x="0.0" y="88" width="414" height="730"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y7y-SW-e0z">
+                                <rect key="frame" x="0.0" y="818" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="uWA-dL-BUW"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem id="1Q5-BI-Xm9">
+                                        <imageReference key="image" image="xmark" catalog="system" symbolScale="large"/>
+                                        <connections>
+                                            <action selector="xButtonPressed:" destination="Psr-FG-Jzm" id="Nua-Uo-Kwb"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="50" style="plain" systemItem="fixedSpace" id="KNZ-ku-axQ"/>
+                                    <barButtonItem image="arrow.backward" catalog="system" id="cxx-ky-4rG">
+                                        <connections>
+                                            <action selector="backButtonPressed:" destination="Psr-FG-Jzm" id="Hb7-5A-pAD"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="50" style="plain" systemItem="fixedSpace" id="3V0-9b-vjt"/>
+                                    <barButtonItem image="arrow.clockwise" catalog="system" id="9LQ-ep-B0m">
+                                        <connections>
+                                            <action selector="reloadButtonPressed:" destination="Psr-FG-Jzm" id="SWL-kZ-EVn"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="50" style="plain" systemItem="fixedSpace" id="eb5-Lz-Rss"/>
+                                    <barButtonItem image="arrow.forward" catalog="system" id="5wp-0e-Nht">
+                                        <connections>
+                                            <action selector="forwardButtonPressed:" destination="Psr-FG-Jzm" id="FUM-SK-b04"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="57U-og-WCO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Mq7-nf-cIT" firstAttribute="leading" secondItem="57U-og-WCO" secondAttribute="leading" id="1OW-pv-HMU"/>
+                            <constraint firstItem="y7y-SW-e0z" firstAttribute="top" secondItem="gGI-pL-zbf" secondAttribute="bottom" id="3i7-Pl-jOj"/>
+                            <constraint firstItem="y7y-SW-e0z" firstAttribute="leading" secondItem="57U-og-WCO" secondAttribute="leading" id="71I-ul-Hj9"/>
+                            <constraint firstItem="y7y-SW-e0z" firstAttribute="trailing" secondItem="57U-og-WCO" secondAttribute="trailing" id="EFk-AU-ceP"/>
+                            <constraint firstItem="gGI-pL-zbf" firstAttribute="top" secondItem="Mq7-nf-cIT" secondAttribute="bottom" id="NzH-j2-cww"/>
+                            <constraint firstItem="Mq7-nf-cIT" firstAttribute="top" secondItem="57U-og-WCO" secondAttribute="top" id="O9E-vf-DoO"/>
+                            <constraint firstItem="Mq7-nf-cIT" firstAttribute="trailing" secondItem="57U-og-WCO" secondAttribute="trailing" id="ccw-qr-MIa"/>
+                            <constraint firstItem="y7y-SW-e0z" firstAttribute="bottom" secondItem="57U-og-WCO" secondAttribute="bottom" id="h8f-oL-g8m"/>
+                            <constraint firstItem="gGI-pL-zbf" firstAttribute="trailing" secondItem="57U-og-WCO" secondAttribute="trailing" id="m3M-WI-B5S"/>
+                            <constraint firstItem="gGI-pL-zbf" firstAttribute="leading" secondItem="57U-og-WCO" secondAttribute="leading" id="xCK-tf-G9V"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="presentWebView" destination="gGI-pL-zbf" id="58A-vX-Lk2"/>
+                        <outlet property="searchBar" destination="Mq7-nf-cIT" id="vNv-iB-G2u"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IZI-oY-3Mm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2772" y="76"/>
+        </scene>
         <!--Setting-->
         <scene sceneID="PNE-qU-ZXz">
             <objects>
@@ -143,12 +221,14 @@
         <!--Tab Bar Controller-->
         <scene sceneID="gMD-KF-m3l">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8nr-hw-hmo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="2jQ-ON-hf2" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="5WC-qc-cgm"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cZr-DY-7VA">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="1" green="0.51827389000000001" blue="0.41395056250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <tabBarAppearance key="standardAppearance"/>
                     </tabBar>
                     <connections>
@@ -158,7 +238,6 @@
                         <segue destination="LM8-ge-lZL" kind="relationship" relationship="viewControllers" id="lQT-I5-paH"/>
                     </connections>
                 </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8nr-hw-hmo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="968.11594202898561" y="76.339285714285708"/>
         </scene>
@@ -166,7 +245,7 @@
         <scene sceneID="qMX-tt-rd0">
             <objects>
                 <viewControllerPlaceholder storyboardName="Restaurant" id="q3O-vg-UzS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="location" id="emz-6D-1Uk"/>
+                    <tabBarItem key="tabBarItem" title="" image="location" landscapeImage="location" id="emz-6D-1Uk"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fd8-Zj-Gdh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -185,10 +264,14 @@
     </scenes>
     <resources>
         <image name="Ellipse1" width="46" height="45"/>
+        <image name="arrow.backward" catalog="system" width="128" height="98"/>
+        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
+        <image name="arrow.forward" catalog="system" width="128" height="98"/>
         <image name="house" width="32" height="32"/>
         <image name="human" width="32" height="32"/>
         <image name="location" width="32" height="32"/>
         <image name="plus" width="32" height="32"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

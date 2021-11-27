@@ -26,6 +26,8 @@ class RegisterViewController: UIViewController {
         setDelegate()
         setNib()
         setNavigation()
+        
+        self.tabBarController?.tabBar.backgroundColor = UIColor(named: "Color")
     }
     
     func setNib() {

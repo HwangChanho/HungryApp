@@ -10,6 +10,8 @@ import NMapsMap
 
 class ViewController: UIViewController {
     
+    static let identifier = "MainView"
+    
     var locationManager: CLLocationManager!
     var cameraPositon = NMFCameraPosition()
     var resultVC = UITableViewController()
@@ -42,12 +44,27 @@ class ViewController: UIViewController {
         self.setTableView()
         self.setCollectionView()
         self.setButtonUI()
+        self.setTabBarController()
         
         let nowPosition = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
         mapView.moveCamera(nowPosition, completion: nil)
+        
+        HungryAPIManager.shared.getHungryApiData(option: "stores") { code, json in
+            print("in ------------ in")
+            print(json)
+            print(code)
+        }
     }
     
     //MARK: - UISetup
+    func setTabBarController() {
+        self.tabBarController?.tabBar.items![0].image = UIImage(named: "house")
+        self.tabBarController?.tabBar.items![1].image = UIImage(named: "location")
+        self.tabBarController?.tabBar.items![2].image = UIImage(named: "plus")
+        self.tabBarController?.tabBar.items![3].image = UIImage(named: "human")
+        
+        self.tabBarController?.tabBar.backgroundColor = UIColor(named: "Color")
+    }
     
     func setButtonUI() {
         nowLocationButton.setTitle("", for: .normal)
@@ -107,7 +124,7 @@ class ViewController: UIViewController {
     
     func setCollectionView() {
         collectionView.isHidden = true
-        collectionView.layer.cornerRadius = 15
+        collectionView.layer.cornerRadius = 25
     }
     
     //MARK: - Action
@@ -314,6 +331,8 @@ extension ViewController: CLLocationManagerDelegate {
         }
         
         marker.mapView = mapView
+        marker.width = 50
+        marker.height = 50
         marker.touchHandler = { (overlay: NMFOverlay) -> Bool in
             print("마커 터치")
             self.markerToggle = true
@@ -394,6 +413,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         // mark
         cameraPositon = mapView.cameraPosition
         setMarker(lat: cameraPositon.target.lat, lng: cameraPositon.target.lng, type: 4, infoWindowText: selectedData?.place_name)
+        
         // show detail
         self.infoWindow.open(with: self.marker)
         self.collectionView.isHidden = false
@@ -490,6 +510,29 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         cell.categoryNameLabel.text = selectedData?.category_group_name
         cell.addressLabel.text = selectedData?.address_name
         cell.placeURLButton.setTitle(selectedData?.place_url, for: .normal)
+        cell.phoneButton.setTitle(selectedData?.phone, for: .normal)
+        cell.buttonActionHandler = {
+            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyBoard.instantiateViewController(withIdentifier: WebViewController.identifier) as! WebViewController
+            
+            vc.url = self.selectedData?.place_url
+            
+            self.present(vc, animated: true, completion: nil)
+        }
+        cell.phoneButtonActionHandler = {
+            let number = self.selectedData?.phone
+            
+            // URLScheme 문자열을 통해 URL 인스턴스를 만들어 줍니다.
+            if let url = NSURL(string: "tel://0" + number!),
+               
+            //canOpenURL(_:) 메소드를 통해서 URL 체계를 처리하는 데 앱을 사용할 수 있는지 여부를 확인
+            UIApplication.shared.canOpenURL(url as URL) {
+                
+            //사용가능한 URLScheme이라면 open(_:options:completionHandler:) 메소드를 호출해서
+            //만들어둔 URL 인스턴스를 열어줍니다.
+            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+            }
+        }
         
         return cell
     }

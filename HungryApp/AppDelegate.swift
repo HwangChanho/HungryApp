@@ -11,10 +11,10 @@ import NMapsMap
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    // var window: UIWindow?
+    var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+      
          //MARK: 탭 바 컨트롤러 생성 - 코드로 생성
          /*
          let tbC = UITabBarController()
@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          view02.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "location"), selectedImage: nil)
          view03.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "plus"), selectedImage: nil)
          view04.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "human"), selectedImage: nil)
-        */
+         */
          
         /*
         //MARK: 윈도우 객체에 연결된 루트뷰 컨트롤러를 읽어와 UITabBarController 로 캐스팅

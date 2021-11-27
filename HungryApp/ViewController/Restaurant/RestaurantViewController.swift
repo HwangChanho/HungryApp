@@ -18,6 +18,8 @@ class RestaurantViewController: UIViewController {
         setDelegate()
         setNib()
         setTableView()
+        
+        self.tabBarController?.tabBar.backgroundColor = UIColor(named: "Color")
     }
     
     func setDelegate() {
