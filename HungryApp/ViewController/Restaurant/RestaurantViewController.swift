@@ -18,6 +18,7 @@ class RestaurantViewController: UIViewController {
         setDelegate()
         setNib()
         setTableView()
+        // setNavigation()
         
         self.tabBarController?.tabBar.backgroundColor = UIColor(named: "Color")
     }
@@ -42,6 +43,20 @@ class RestaurantViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
     }
+    
+    func setNavigation() {
+        let firstBarItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(addButtonPressed(_:)))
+        
+        var rightBarButtons: [UIBarButtonItem] = []
+        rightBarButtons.append(firstBarItem)
+        self.navigationItem.rightBarButtonItems = rightBarButtons
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "Color")
+    }
+    
+    // navigation 버튼
+    @objc func addButtonPressed(_ sender: UIButton) {
+        
+    }
 }
 
 //MARK: - CollectionView
@@ -63,7 +78,7 @@ extension RestaurantViewController: UICollectionViewDelegate, UICollectionViewDa
     /* 수정 필요 */
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         // let element = list[indexPath.row].userName
-
+        
         let element = "test"
         let fontSize = 12
         let limit = 30
@@ -73,7 +88,7 @@ extension RestaurantViewController: UICollectionViewDelegate, UICollectionViewDa
         let space = estimatedFrame.height - CGFloat(limit)
         
         print("collection view : ", collectionView.frame.width - 10)
-
+        
         return CGSize(width: collectionView.frame.width - 10, height: 125 + space)
     }
     
@@ -98,7 +113,7 @@ extension RestaurantViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.size.height / 2
+        return UIScreen.main.bounds.size.height / 3
     }
     
 }

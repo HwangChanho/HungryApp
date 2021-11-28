@@ -117,10 +117,11 @@
                             <constraint firstItem="rb7-jA-EPu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Xd1-nE-PIC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="" image="house" id="0Sn-Jb-zqf"/>
+                    <tabBarItem key="tabBarItem" title="" image="house" selectedImage="houseSelected" id="0Sn-Jb-zqf"/>
                     <navigationItem key="navigationItem" id="ZGv-D0-L2v"/>
                     <connections>
                         <outlet property="collectionView" destination="nkc-Qk-tvK" id="U2j-SB-vA6"/>
+                        <outlet property="homeButtonPressed" destination="0Sn-Jb-zqf" id="eFt-kB-Qeu"/>
                         <outlet property="mapView" destination="KHb-Yo-Olh" id="rXq-oW-DMg"/>
                         <outlet property="nowLocationButton" destination="XDO-CL-gCe" id="Vdd-bV-FvJ"/>
                         <outlet property="searchBar" destination="NNI-Qt-BWt" id="hpQ-qY-Jng"/>
@@ -212,17 +213,16 @@
         <scene sceneID="PNE-qU-ZXz">
             <objects>
                 <viewControllerPlaceholder storyboardName="Setting" id="Hpg-y1-qwJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="human" id="V1R-f2-2Wp"/>
+                    <tabBarItem key="tabBarItem" title="" image="human" selectedImage="humanSelected" id="V1R-f2-2Wp"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bbE-ND-hpk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1878" y="675"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="gMD-KF-m3l">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8nr-hw-hmo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="2jQ-ON-hf2" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarViewController" automaticallyAdjustsScrollViewInsets="NO" id="2jQ-ON-hf2" customClass="TabBarViewController" customModule="HungryApp" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="5WC-qc-cgm"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="cZr-DY-7VA">
@@ -234,10 +234,11 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="tHv-JC-xUO"/>
                         <segue destination="q3O-vg-UzS" kind="relationship" relationship="viewControllers" id="g2G-ac-Hap"/>
-                        <segue destination="Hpg-y1-qwJ" kind="relationship" relationship="viewControllers" id="FrX-Hb-oXq"/>
                         <segue destination="LM8-ge-lZL" kind="relationship" relationship="viewControllers" id="lQT-I5-paH"/>
+                        <segue destination="Hpg-y1-qwJ" kind="relationship" relationship="viewControllers" id="FrX-Hb-oXq"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8nr-hw-hmo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="968.11594202898561" y="76.339285714285708"/>
         </scene>
@@ -245,7 +246,7 @@
         <scene sceneID="qMX-tt-rd0">
             <objects>
                 <viewControllerPlaceholder storyboardName="Restaurant" id="q3O-vg-UzS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="location" landscapeImage="location" id="emz-6D-1Uk"/>
+                    <tabBarItem key="tabBarItem" title="" image="location" landscapeImage="location" selectedImage="locationSelected" id="emz-6D-1Uk"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fd8-Zj-Gdh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -255,7 +256,7 @@
         <scene sceneID="hUy-Xh-H60">
             <objects>
                 <viewControllerPlaceholder storyboardName="Register" id="LM8-ge-lZL" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="plus" id="3Ts-wE-BRP"/>
+                    <tabBarItem key="tabBarItem" title="" image="plus" selectedImage="plusSelected" id="3Ts-wE-BRP"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mYw-KP-70Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -268,9 +269,13 @@
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="arrow.forward" catalog="system" width="128" height="98"/>
         <image name="house" width="32" height="32"/>
+        <image name="houseSelected" width="32" height="32"/>
         <image name="human" width="32" height="32"/>
+        <image name="humanSelected" width="32" height="32"/>
         <image name="location" width="32" height="32"/>
+        <image name="locationSelected" width="32" height="32"/>
         <image name="plus" width="32" height="32"/>
+        <image name="plusSelected" width="32" height="32"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

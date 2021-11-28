@@ -17,26 +17,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="394" height="336"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="ufA-JH-nO0">
-                        <rect key="frame" x="0.0" y="0.5" width="394" height="335"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="s7p-1H-okU">
+                        <rect key="frame" x="0.0" y="0.0" width="394" height="336"/>
                     </imageView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="ufA-JH-nO0" secondAttribute="trailing" id="5kW-GA-HbR"/>
-                <constraint firstItem="ufA-JH-nO0" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="6Bi-Kg-pU5"/>
-                <constraint firstAttribute="bottom" secondItem="ufA-JH-nO0" secondAttribute="bottom" id="Cui-ZJ-RrB"/>
-                <constraint firstItem="ufA-JH-nO0" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="qaL-9t-Zam"/>
+                <constraint firstAttribute="trailing" secondItem="s7p-1H-okU" secondAttribute="trailing" id="Kqb-rC-fKL"/>
+                <constraint firstAttribute="bottom" secondItem="s7p-1H-okU" secondAttribute="bottom" id="MgA-Df-mNY"/>
+                <constraint firstItem="s7p-1H-okU" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="jkW-gj-kcM"/>
+                <constraint firstItem="s7p-1H-okU" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="qg0-Hs-2D0"/>
             </constraints>
             <size key="customSize" width="185" height="187"/>
             <connections>
-                <outlet property="imageView" destination="ufA-JH-nO0" id="mqc-GT-exO"/>
+                <outlet property="imageView" destination="s7p-1H-okU" id="KUH-rS-JM8"/>
             </connections>
             <point key="canvasLocation" x="165.94202898550725" y="101.45089285714285"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="xmark.circle" catalog="system" width="128" height="121"/>
-    </resources>
 </document>

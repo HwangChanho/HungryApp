@@ -67,22 +67,20 @@ class KakaoLocalAPIManager {
             formattedURL = url + "&y=" + y! + "&x=" + x! + "&radius=" + String(radius)
         }
         
-        DispatchQueue.global(qos: DispatchQoS.QoSClass.background).async {
-            AF.request(formattedURL, method: .get, parameters: parameters, headers: header)
-                .responseJSON { response in
-                    switch response.result {
-                    case .success(let value):
-                        let json = JSON(value)
-                        
-                        let code = response.response?.statusCode ?? 500
-                        
-                        result(code, json)
-                        
-                    case .failure(let error): // 네트워크 통신 실패시
-                        print(error)
-                    }
+        AF.request(formattedURL, method: .get, parameters: parameters, headers: header)
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let json = JSON(value)
+                    
+                    let code = response.response?.statusCode ?? 500
+                    
+                    result(code, json)
+                    
+                case .failure(let error): // 네트워크 통신 실패시
+                    print(error)
                 }
-        }
+            }
     }
 }
 

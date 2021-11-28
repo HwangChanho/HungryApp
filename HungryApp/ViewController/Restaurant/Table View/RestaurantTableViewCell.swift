@@ -25,12 +25,12 @@ class RestaurantTableViewCell: UITableViewCell {
         
         backgroundImage.clipsToBounds = true
         backgroundImage.layer.cornerRadius = 15
+        backgroundImage.backgroundColor = .gray
         
-        backgroundImage.backgroundColor = .red
+        starButton.map{ $0.tintColor = UIColor(named: "Color") }
         
         bottomView.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMaxYCorner, .layerMaxXMaxYCorner])
-        
-        contentView.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        mainView.roundCorners(cornerRadius: 15, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -52,17 +52,4 @@ class RestaurantTableViewCell: UITableViewCell {
         
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 10, left: 5, bottom: 10, right: 5))
     }
-    
-    @IBAction func firstStar(_ sender: UIButton) {
-    }
-    @IBAction func secondStar(_ sender: UIButton) {
-    }
-    @IBAction func thirdStar(_ sender: UIButton) {
-    }
-    @IBAction func fourthStar(_ sender: UIButton) {
-    }
-    @IBAction func fifthStar(_ sender: UIButton) {
-    }
-    
-    
 }

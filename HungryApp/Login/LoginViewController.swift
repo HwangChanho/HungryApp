@@ -9,12 +9,18 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    static let identifier = "LoginViewController"
+    
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var searchIdPass: UIButton!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var textFieldStackView: UIStackView!
+    @IBOutlet weak var saveEmailButton: UIButton!
+    @IBOutlet weak var autoLoginButton: UIButton!
+    @IBOutlet weak var saveEmailLabel: UILabel!
+    @IBOutlet weak var autoLoginLabel: UILabel!
     
     var userModel = UserModel()
     
@@ -25,8 +31,26 @@ class LoginViewController: UIViewController {
         setLoginButton()
         setButtons()
         setNotificationCenter()
+        setLoginLabelsAndButtons()
         
         self.emailField.addTarget(self, action: #selector(self.emailFieldDidChange(_:)), for: .editingChanged)
+        
+        // 유저 defaults에서 검사
+        UserDefaultManager.shared.load()
+
+        if let id = UserDefaultManager.shared.user?.id {
+            if let pass = UserDefaultManager.shared.user?.pass {
+                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyBoard.instantiateViewController(withIdentifier: TabBarViewController.identifier) as! TabBarViewController
+                
+                vc.modalPresentationStyle = .fullScreen
+                
+                self.present(vc, animated: true, completion: nil)
+            } else {
+                emailField.text = id
+                saveEmailButton.isSelected = true
+            }
+        }
     }
     
     func setTextField() {
@@ -37,6 +61,7 @@ class LoginViewController: UIViewController {
         passwordField.placeholder = "비밀번호"
         passwordField.autocorrectionType = .no
         passwordField.autocapitalizationType = .none
+        passwordField.isSecureTextEntry = true
     }
     
     func setLoginButton() {
@@ -53,6 +78,22 @@ class LoginViewController: UIViewController {
         registerButton.tintColor = UIColor(named: "Color")
     }
     
+    func setLoginLabelsAndButtons() {
+        saveEmailLabel.text = "이메일 저장"
+        saveEmailLabel.font = .systemFont(ofSize: 12)
+        saveEmailLabel.textColor = .gray
+        
+        saveEmailButton.tintColor = .gray
+        saveEmailButton.setTitle("", for: .normal)
+        
+        autoLoginLabel.text = "자동 로그인"
+        autoLoginLabel.font = .systemFont(ofSize: 12)
+        autoLoginLabel.textColor = .gray
+        
+        autoLoginButton.tintColor = .gray
+        autoLoginButton.setTitle("", for: .normal)
+    }
+    
     func dismissObserver() {
         // 옵저버 해제
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -64,13 +105,22 @@ class LoginViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(textViewMoveDown), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    @IBAction func saveEmailButtonPressed(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+    }
+    
+    @IBAction func autoLoginButtonPressed(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+    }
+    
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         guard let email = emailField.text, !email.isEmpty else { return }
         guard let password = passwordField.text, !password.isEmpty else { return }
         
-        //HungryAPIManager.shared.getIdPwdApiData(option: "users", id: emailField.text, pass: passwordField.text, result: nil)
+        var loginSuccess: Bool = loginCheck(id: email, pwd: password)
         
-        let loginSuccess: Bool = loginCheck(id: email, pwd: password)
+        loginSuccess = true // test 용
+        
         if loginSuccess {
             print("로그인 성공")
             if let removable = self.view.viewWithTag(102) {
@@ -79,9 +129,20 @@ class LoginViewController: UIViewController {
             
             dismissObserver()
             
+            if self.saveEmailButton.isSelected {
+                UserDefaultManager.shared.user?.id = email
+                UserDefaultManager.shared.save()
+            }
+            
+            if autoLoginButton.isSelected {
+                UserDefaultManager.shared.user?.id = email
+                UserDefaultManager.shared.user?.pass = password
+                UserDefaultManager.shared.save()
+            }
+            
             // 로그인 성공시
             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyBoard.instantiateViewController(withIdentifier: ViewController.identifier) as! ViewController
+            let vc = storyBoard.instantiateViewController(withIdentifier: TabBarViewController.identifier) as! TabBarViewController
             
             vc.modalPresentationStyle = .fullScreen
             
@@ -99,9 +160,16 @@ class LoginViewController: UIViewController {
         }
     }
     
-    
     @IBAction func searchButtonPressed(_ sender: UIButton) {
         dismissObserver()
+        
+        let storyBoard = UIStoryboard(name: "Login", bundle: nil)
+        
+        let vc = storyBoard.instantiateViewController(withIdentifier: SearchUserInfoViewController.identifier) as! SearchUserInfoViewController
+        
+        vc.emailField = emailField.text ?? ""
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @IBAction func registerButtonPressed(_ sender: UIButton) {
@@ -117,20 +185,6 @@ class LoginViewController: UIViewController {
         vc.passField = passwordField
         
         self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func shakeTextField(textField: UITextField) -> Void{
-        UIView.animate(withDuration: 0.2, animations: {
-            textField.frame.origin.x -= 10
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.2, animations: {
-                textField.frame.origin.x += 20
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.2, animations: {
-                    textField.frame.origin.x -= 10
-                })
-            })
-        })
     }
     
     func loginCheck(id: String, pwd: String) -> Bool {
@@ -172,26 +226,6 @@ class LoginViewController: UIViewController {
             showToast(message: "이메일 형식을 확인해 주세요")
             // emailField.viewWithTag(100)
         }
-    }
-    
-    func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 100, y: self.view.frame.size.height-100, width: 200, height: 35))
-        
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.font = font
-        toastLabel.textAlignment = .center;
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds = true
-        
-        self.view.addSubview(toastLabel)
-        
-        UIView.animate(withDuration: 2.0, delay: 0.1, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0 }, completion: {(isCompleted) in
-                toastLabel.removeFromSuperview()
-        })
     }
     
 }

@@ -25,8 +25,7 @@ class DetailInfoCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        mainVIew.backgroundColor = UIColor(named: "Color")
+        mainVIew.backgroundColor = UIColor(named: "ColorAlpha")
         
         imageLabel.backgroundColor = .gray
         imageLabel.image = UIImage(systemName: "xmark")

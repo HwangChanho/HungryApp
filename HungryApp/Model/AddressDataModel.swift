@@ -24,5 +24,8 @@ struct addressDataByKeyworld {
     let road_address_name: String
     let x: String
     let y: String
+    var category: String?
+    var rating: String?
+    var review: String?
 }
 
