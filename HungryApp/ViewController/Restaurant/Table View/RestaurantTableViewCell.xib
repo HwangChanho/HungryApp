@@ -28,7 +28,7 @@
                                 <rect key="frame" x="0.0" y="178.5" width="290" height="71.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4WN-Rt-bhX">
-                                        <rect key="frame" x="5" y="41" width="41.5" height="20.5"/>
+                                        <rect key="frame" x="20" y="41" width="41.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -92,7 +92,7 @@
                                         </constraints>
                                     </stackView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6I-Us-D6O">
-                                        <rect key="frame" x="5" y="10" width="41.5" height="20.5"/>
+                                        <rect key="frame" x="20" y="10" width="41.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -101,11 +101,11 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="z6I-Us-D6O" firstAttribute="top" secondItem="brO-Uw-JtY" secondAttribute="top" constant="10" id="7Sa-SG-BYO"/>
-                                    <constraint firstItem="z6I-Us-D6O" firstAttribute="leading" secondItem="brO-Uw-JtY" secondAttribute="leading" constant="5" id="UQM-W8-phk"/>
+                                    <constraint firstItem="z6I-Us-D6O" firstAttribute="leading" secondItem="brO-Uw-JtY" secondAttribute="leading" constant="20" id="UQM-W8-phk"/>
                                     <constraint firstAttribute="trailing" secondItem="ud1-YR-q1o" secondAttribute="trailing" constant="5" id="e9K-Fr-FZk"/>
                                     <constraint firstAttribute="bottom" secondItem="4WN-Rt-bhX" secondAttribute="bottom" constant="10" id="eFH-pH-6DG"/>
                                     <constraint firstAttribute="bottom" secondItem="ud1-YR-q1o" secondAttribute="bottom" constant="10" id="yLw-e9-WVz"/>
-                                    <constraint firstItem="4WN-Rt-bhX" firstAttribute="leading" secondItem="brO-Uw-JtY" secondAttribute="leading" constant="5" id="zxl-tA-rcN"/>
+                                    <constraint firstItem="4WN-Rt-bhX" firstAttribute="leading" secondItem="brO-Uw-JtY" secondAttribute="leading" constant="20" id="zxl-tA-rcN"/>
                                 </constraints>
                             </view>
                         </subviews>

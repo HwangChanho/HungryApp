@@ -50,6 +50,21 @@
             </objects>
             <point key="canvasLocation" x="892.75362318840587" y="56.919642857142854"/>
         </scene>
+        <!--Lisence View Controller-->
+        <scene sceneID="2jh-v6-BGY">
+            <objects>
+                <viewController storyboardIdentifier="LisenceViewController" id="grv-Cn-Bz0" customClass="LisenceViewController" customModule="HungryApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EeR-2Y-zhO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="HFs-Oh-N4s"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k3t-n9-t7D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1743" y="57"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="cQO-5O-Vgl">
             <objects>

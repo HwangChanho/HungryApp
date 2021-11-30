@@ -12,7 +12,7 @@ class SettingViewController: UIViewController {
 
     static let identifier = "SettingViewController"
     
-    var titleArr: [String] = ["로그아웃"]
+    var titleArr: [String] = ["로그아웃", "라이센스"]
     let picker = UIImagePickerController()
     
     @IBOutlet weak var imageView: UIImageView!
@@ -110,12 +110,6 @@ class SettingViewController: UIViewController {
         default:
             break
         }
-        //        if(UIImagePickerController .isSourceTypeAvailable(.camera)){
-        //            picker.sourceType = .camera
-        //            present(picker, animated: false, completion: nil)
-        //        } else {
-        //            print("Camera not available")
-        //        }
     }
 }
 
@@ -140,9 +134,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(titleArr[indexPath.row])
-        if titleArr[indexPath.row] == "로그아웃" {
-            UserDefaultManager.shared.user = nil
+        switch indexPath.row {
+        case 0: // 설정
+            UserDefaultManager.shared.user.id = ""
+            UserDefaultManager.shared.user.pass = ""
             UserDefaultManager.shared.save()
             
             let storyBoard = UIStoryboard(name: "Login", bundle: nil)
@@ -151,6 +146,13 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
             vc.modalPresentationStyle = .fullScreen
             
             self.present(vc, animated: true, completion: nil)
+        case 1: // 라이센스
+            let storyBoard = UIStoryboard(name: "Setting", bundle: nil)
+            let vc = storyBoard.instantiateViewController(withIdentifier: LisenceViewController.identifier) as! LisenceViewController
+            
+            self.navigationController?.pushViewController(vc, animated: true)
+        default:
+            print("no menu")
         }
     }
     

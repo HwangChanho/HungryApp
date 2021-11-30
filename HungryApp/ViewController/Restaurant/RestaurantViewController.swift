@@ -12,6 +12,12 @@ class RestaurantViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     
+    let foodcate = FoodCategory()
+    
+    var aData: [addressDataByKeyworld] = []
+    var selectedData: addressDataByKeyworld?
+    var nowUser = UserDefaultManager.shared.user.index
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,6 +50,10 @@ class RestaurantViewController: UIViewController {
         tableView.separatorStyle = .none
     }
     
+    func setCollectionView() {
+        collectionView.tintColor = UIColor(named: "Color")
+    }
+    
     func setNavigation() {
         let firstBarItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(addButtonPressed(_:)))
         
@@ -57,40 +67,55 @@ class RestaurantViewController: UIViewController {
     @objc func addButtonPressed(_ sender: UIButton) {
         
     }
+    
+    func getUserDataFromDB() {
+        HungryAPIManager.shared.getAllStoreByUserIndexAndCategory(index: nowUser, category: nil) { code, json in
+            print(code, json)
+
+            switch(code) {
+            case 200:
+                let result = json["result"].stringValue
+                print(result)
+                if result == "FAILURE" {
+                } else {
+                }
+            case 400:
+                print("error")
+            default:
+                print("ERROR")
+            }
+    }
+        
+        
+        
+    }
 }
 
 //MARK: - CollectionView
 
 extension RestaurantViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return foodcate.pickerList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let row = foodcate.pickerList[indexPath.row]
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RestaurantCollectionViewCell.identifier, for: indexPath) as? RestaurantCollectionViewCell else { return UICollectionViewCell() }
         
-        cell.filterButton.setTitle("test", for: .normal)
+        cell.filterButton.setTitle(row, for: .normal)
+        cell.buttonActionHandler = {
+            // row 값을 서버에 전송하여 필터링된 데이터를 받아옴
+            print(row)
+        }
         
         return cell
     }
     
-    /* 수정 필요 */
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // let element = list[indexPath.row].userName
-        
-        let element = "test"
-        let fontSize = 12
-        let limit = 30
-        let size = CGSize(width: collectionView.frame.width - 10, height: 1000)
-        let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: CGFloat(fontSize))]
-        let estimatedFrame = element.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-        let space = estimatedFrame.height - CGFloat(limit)
-        
-        print("collection view : ", collectionView.frame.width - 10)
-        
-        return CGSize(width: collectionView.frame.width - 10, height: 125 + space)
+        return CGSize(width: 10, height: collectionView.bounds.height)
     }
+    
     
 }
 
@@ -114,6 +139,37 @@ extension RestaurantViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIScreen.main.bounds.size.height / 3
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Register", bundle: nil)
+        
+        let vc = storyBoard.instantiateViewController(identifier: "RegisterViewController") as! RegisterViewController
+        
+        vc.searchText = "korean"
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // let row = aData[indexPath.row]
+        
+        let action = UIContextualAction(style: .normal, title: nil) { (action, view, completion) in
+            
+            // DB제거
+            completion(true)
+        }
+        
+        action.backgroundColor = .red
+        action.image = UIImage(systemName: "trash.fill")
+        
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
     
 }

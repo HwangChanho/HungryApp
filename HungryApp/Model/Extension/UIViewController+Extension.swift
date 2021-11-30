@@ -8,6 +8,8 @@
 import UIKit
 
 extension UIViewController {
+    typealias CompletionHandler = () -> ()
+    
     func cameraSettingAlert() {
         if let appName = Bundle.main.infoDictionary!["CFBundleName"] as? String {
             let alert = UIAlertController(title: "설정", message: "\(appName)이 (가) 카메라 접근 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?", preferredStyle: .alert)
@@ -27,7 +29,7 @@ extension UIViewController {
     }
     
     func showToast(message : String, font: UIFont = UIFont.systemFont(ofSize: 14.0)) {
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width / 2 - 100, y: self.view.frame.size.height / 4, width: 200, height: 35))
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width / 2 - 100, y: self.view.frame.size.height / 2 - 100, width: 200, height: 35))
         
         toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         toastLabel.textColor = UIColor.white
@@ -48,7 +50,7 @@ extension UIViewController {
     
     func showFoodCategoryAlert(pickerFrame: UIPickerView) {
         let alert = UIAlertController(title: "카테고리", message: "\n\n\n\n\n\n", preferredStyle: .alert)
-
+        
         alert.view.addSubview(pickerFrame)
         
         alert.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
@@ -69,5 +71,31 @@ extension UIViewController {
                 })
             })
         })
+    }
+    
+    func setTimer(seconds: Int, result: CompletionHandler?) {
+        let timer = DispatchSource.makeTimerSource()
+        timer.schedule(deadline: .now() + .seconds(seconds))
+        timer.setEventHandler {
+            print("Timer On")
+        }
+        timer.activate()
+    }
+    
+    func drawIndicator(activityIndicator: UIActivityIndicatorView, isActive: Bool) {
+        activityIndicator.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        activityIndicator.center = self.view.center
+        activityIndicator.color = UIColor(named: "Color")
+        // Also show the indicator even when the animation is stopped.
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.style = UIActivityIndicatorView.Style.large
+        
+        self.view.addSubview(activityIndicator)
+        
+        if isActive {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
     }
 }

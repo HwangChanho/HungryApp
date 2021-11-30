@@ -7,15 +7,17 @@
 
 import Foundation
 
-struct UserInfo: Codable {
-    var id: String?
-    var pass: String?
+struct User: Codable {
+    var id: String = ""
+    var pass: String = ""
+    var index: String = ""
+    var phoneNum: String = ""
 }
 
 final class UserDefaultManager {
     static let shared  = UserDefaultManager()
     
-    var user: UserInfo?
+    var user = User()
     
     init() {
         load()
@@ -34,7 +36,7 @@ final class UserDefaultManager {
     func load() {
         do {
             if let data = UserDefaults.standard.data(forKey: Constants.userDefaultKey.userInfo) {
-                let decoded = try JSONDecoder().decode(UserInfo.self, from: data)
+                let decoded = try JSONDecoder().decode(User.self, from: data)
                 user = decoded
             }
         } catch {

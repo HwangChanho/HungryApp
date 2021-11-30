@@ -12,15 +12,14 @@ class RegisterViewController: UIViewController {
     
     static let identifier = "RegisterViewController"
     
-    let pickerList = ["한식", "분식", "카페디저트", "일식", "치킨", "피자", "아시안", "중식", "족발보쌈", "야식", "찜탕", "도시락", "패스트푸드", "베스트"]
     var pickerView = UIPickerView()
+    let foodcate = FoodCategory()
     
     let picker = UIImagePickerController()
     let pickerFrame = UIPickerView(frame: CGRect(x: 5, y: 20, width: 250, height: 140))
     var nowPage = 0
     var aData: [addressDataByKeyworld] = []
     var selectedData: addressDataByKeyworld?
-    var filteredAData: [addressDataByKeyworld] = []
     var totalCount = 0
     var count = 0
     var page = 0
@@ -57,6 +56,8 @@ class RegisterViewController: UIViewController {
         
         self.tabBarController?.tabBar.backgroundColor = UIColor(named: "Color")
         collectionView.backgroundColor = .lightGray
+        
+        
     }
     
     func bind() {
@@ -164,6 +165,7 @@ class RegisterViewController: UIViewController {
         categoryButton.backgroundColor = UIColor(named: "Color")
         categoryButton.setTitle("카테고리 선택", for: .normal)
         categoryButton.layer.cornerRadius = 10
+        categoryButton.titleLabel?.font = .systemFont(ofSize: 15)
     }
     
     @objc func textViewMoveUp(_ notification: NSNotification) {
@@ -218,7 +220,12 @@ class RegisterViewController: UIViewController {
             return
         }
         
+        
         // 사진 전송 images[]
+    }
+    
+    func fetchData() {
+        
     }
     
     @IBAction func categorySelect(_ sender: UIButton) {
@@ -257,12 +264,6 @@ class RegisterViewController: UIViewController {
         default:
             break
         }
-        //        if(UIImagePickerController .isSourceTypeAvailable(.camera)){
-        //            picker.sourceType = .camera
-        //            present(picker, animated: false, completion: nil)
-        //        } else {
-        //            print("Camera not available")
-        //        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -340,7 +341,7 @@ class RegisterViewController: UIViewController {
                 
                 switch categoryGroupCode {
                 case "MT1", "CS2", "CT1", "AT4", "FD6", "CE7":
-                    let data = addressDataByKeyworld(address_name: addressName!, category_group_name: categoryGroupName, category_group_code: categoryGroupCode, phone: phone, place_name: placeName, place_url: placeUrl, road_address_name: roadAddressName!, x: longitudeX!, y: latitudeY!, category: nil)
+                    let data = addressDataByKeyworld(address_name: addressName!, category_group_name: categoryGroupName, category_group_code: categoryGroupCode, phone: phone, place_name: placeName, place_url: placeUrl, road_address_name: roadAddressName!, x: Double(longitudeX!)!, y: Double(latitudeY!)!, category: nil, rating: nil, review: nil)
                     
                     self.aData.append(data)
                     
@@ -492,17 +493,15 @@ extension RegisterViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.pickerList.count
+        return foodcate.pickerList.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerList[row]
+        return foodcate.pickerList[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        categoryButton.setTitle(pickerList[row], for: .normal)
-        selectedData?.category = pickerList[row]
-        
-        print("selectedData : ", selectedData)
+        categoryButton.setTitle(foodcate.pickerList[row], for: .normal)
+        selectedData?.category = foodcate.pickerList[row]
     }
 }

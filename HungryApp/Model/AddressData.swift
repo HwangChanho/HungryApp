@@ -15,15 +15,15 @@ struct addressData {
 }
 
 struct addressDataByKeyworld {
-    let address_name: String
-    let category_group_name: String?
-    let category_group_code: String?
-    let phone: String?
-    let place_name: String?
-    let place_url: String?
-    let road_address_name: String
-    let x: String
-    let y: String
+    var address_name: String
+    var category_group_name: String?
+    var category_group_code: String?
+    var phone: String?
+    var place_name: String?
+    var place_url: String?
+    var road_address_name: String
+    var x: Double
+    var y: Double
     var category: String?
     var rating: String?
     var review: String?

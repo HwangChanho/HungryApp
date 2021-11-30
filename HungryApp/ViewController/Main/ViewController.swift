@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     
     var aData: [addressDataByKeyworld] = []
     var selectedData: addressDataByKeyworld?
-    var filteredAData: [addressDataByKeyworld] = []
+    var userData: [addressDataByKeyworld] = []
     var totalCount = 0
     var page = 0
     var searchText = ""
@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     let infoWindow = NMFInfoWindow()
     let dataSource = NMFInfoWindowDefaultTextSource.data()
     let marker = NMFMarker()
+    // let myMarkers: [NMFMarker] = []
     
     @IBOutlet weak var mapView: NMFMapView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -54,6 +55,8 @@ class ViewController: UIViewController {
             print("in ------------ in")
             print(json)
             print(code)
+            
+            // filtered data 들어갈 자리
         }
     }
     
@@ -61,8 +64,6 @@ class ViewController: UIViewController {
     func setNowPosition() {
         let nowPosition = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
         mapView.moveCamera(nowPosition, completion: nil)
-        
-        // setMarker(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0, type: 1, infoWindowText: nil)
     }
     
     func setTabBarController() {
@@ -101,7 +102,6 @@ class ViewController: UIViewController {
         
         self.searchedTableView.delegate = self
         self.searchedTableView.dataSource = self
-        //self.searchedTableView.prefetchDataSource = self
         
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
@@ -148,7 +148,6 @@ class ViewController: UIViewController {
     //MARK: - APISetup
     
     func fetchKakaoLocalAPIData(text: String, x: String?, y: String?, page: String?) {
-        
         KakaoLocalAPIManager.shared.getKakaoLocalApiData(url: Constants.requestAPI.requestByAddressAndKeyword, keyword: text, x: x, y: y, page: page) { code, json in
             
             let countItem = json["meta"]["total_count"].intValue
@@ -174,7 +173,7 @@ class ViewController: UIViewController {
                 
                 switch categoryGroupCode {
                 case "MT1", "CS2", "CT1", "AT4", "FD6", "CE7":
-                    let data = addressDataByKeyworld(address_name: addressName!, category_group_name: categoryGroupName, category_group_code: categoryGroupCode, phone: phone, place_name: placeName, place_url: placeUrl, road_address_name: roadAddressName!, x: longitudeX!, y: latitudeY!, category: nil)
+                    let data = addressDataByKeyworld(address_name: addressName!, category_group_name: categoryGroupName, category_group_code: categoryGroupCode, phone: phone, place_name: placeName, place_url: placeUrl, road_address_name: roadAddressName!, x: Double(longitudeX!)!, y: Double(latitudeY!)!, category: nil, rating: nil, review: nil)
                     
                     self.aData.append(data)
                     
@@ -315,7 +314,6 @@ extension ViewController: CLLocationManagerDelegate {
     // 사용자가 위치 허용을 한 경우
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print(#function)
-        
         //        print("loc in :", locationManager.location?.coordinate ?? "")
         //        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
         //        mapView.moveCamera(cameraUpdate)
@@ -394,7 +392,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         if self.collectionView.isHidden == false && self.markerToggle == true{
             self.markerToggle = false
-            
         }
     }
     
@@ -403,13 +400,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         if !cellTapped {
             return
         }
-        
         let row = aData[indexPath.row]
         
         selectedData = aData[indexPath.row]
         
         // 해당위치로 카메라 이동
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: Double(row.y)!, lng: Double(row.x)!))
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: row.y, lng: row.x))
         mapView.moveCamera(cameraUpdate)
         
         // mark
@@ -439,23 +435,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat.leastNormalMagnitude // 이게 CGFloat 양수 최소값 상수
     }
-    
-    //    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-    //        for indexPath in indexPaths {
-    //            if aData.count - 1 == indexPath.row {
-    //                page += 1
-    //                fetchKakaoLocalAPIData(text: self.searchText, x: nil, y: nil, page: String(page))
-    //                print("indexPath: \(indexPath)", page)
-    //                // 서버에 요청
-    //            } else if page == totalCount {
-    //                print("end")
-    //            }
-    //        }
-    //    }
-    
-    //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    //        <#code#>
-    //    }
 }
 
 //MARK: - SearchBarDelegate
@@ -501,7 +480,7 @@ extension ViewController: UISearchBarDelegate {
 
 //MARK: - CollectionView Delegate
 
-extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // db에서 사진 갯수 가저와서 표출 or 1
         return 1

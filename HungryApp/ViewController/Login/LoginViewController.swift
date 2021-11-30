@@ -11,6 +11,7 @@ class LoginViewController: UIViewController {
     
     static let identifier = "LoginViewController"
     
+    @IBOutlet weak var titleImage: UIImageView!
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -23,9 +24,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var autoLoginLabel: UILabel!
     
     var userModel = UserModel()
+    var userDefaults: User?
+    var loginAvail = false
+    let activityIndicator = UIActivityIndicatorView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        titleImage.image = UIImage(named: "Group2")
         
         setTextField()
         setLoginButton()
@@ -37,9 +43,11 @@ class LoginViewController: UIViewController {
         
         // 유저 defaults에서 검사
         UserDefaultManager.shared.load()
-
-        if let id = UserDefaultManager.shared.user?.id {
-            if let pass = UserDefaultManager.shared.user?.pass {
+        
+        print(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last! as String)
+        
+        if UserDefaultManager.shared.user.id != "" {
+            if (UserDefaultManager.shared.user.pass) != "" {
                 let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyBoard.instantiateViewController(withIdentifier: TabBarViewController.identifier) as! TabBarViewController
                 
@@ -47,7 +55,7 @@ class LoginViewController: UIViewController {
                 
                 self.present(vc, animated: true, completion: nil)
             } else {
-                emailField.text = id
+                emailField.text = UserDefaultManager.shared.user.id
                 saveEmailButton.isSelected = true
             }
         }
@@ -117,46 +125,40 @@ class LoginViewController: UIViewController {
         guard let email = emailField.text, !email.isEmpty else { return }
         guard let password = passwordField.text, !password.isEmpty else { return }
         
-        var loginSuccess: Bool = loginCheck(id: email, pwd: password)
+        loginCheck(id: email, pwd: password)
         
-        loginSuccess = true // test 용
-        
-        if loginSuccess {
-            print("로그인 성공")
-            if let removable = self.view.viewWithTag(102) {
-                removable.removeFromSuperview()
-            }
+        drawIndicator(activityIndicator: activityIndicator, isActive: true)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
             
-            dismissObserver()
+            print("avail : ", self.loginAvail)
             
-            if self.saveEmailButton.isSelected {
-                UserDefaultManager.shared.user?.id = email
+            if self.loginAvail {
+                print("로그인 성공")
+                if let removable = self.view.viewWithTag(102) {
+                    removable.removeFromSuperview()
+                }
+                
+                self.dismissObserver()
+                
+                UserDefaultManager.shared.user.id = email
+                UserDefaultManager.shared.user.pass = password
                 UserDefaultManager.shared.save()
+                self.drawIndicator(activityIndicator: self.activityIndicator, isActive: false)
+                
+                // 로그인 성공시
+                let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyBoard.instantiateViewController(withIdentifier: TabBarViewController.identifier) as! TabBarViewController
+                
+                vc.modalPresentationStyle = .fullScreen
+                
+                self.present(vc, animated: true, completion: nil)
+            } else {
+                print("로그인 실패")
+                self.shakeTextField(textField: self.emailField)
+                self.shakeTextField(textField: self.passwordField)
+                self.showToast(message: "아이디 또는 비밀번호가 일치하지 않습니다.")
             }
-            
-            if autoLoginButton.isSelected {
-                UserDefaultManager.shared.user?.id = email
-                UserDefaultManager.shared.user?.pass = password
-                UserDefaultManager.shared.save()
-            }
-            
-            // 로그인 성공시
-            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyBoard.instantiateViewController(withIdentifier: TabBarViewController.identifier) as! TabBarViewController
-            
-            vc.modalPresentationStyle = .fullScreen
-            
-            self.present(vc, animated: true, completion: nil)
-        } else {
-            print("로그인 실패")
-            shakeTextField(textField: emailField)
-            shakeTextField(textField: passwordField)
-            let loginFailLabel = UILabel(frame: CGRect(x: 68, y: 510, width: 279, height: 45))
-            loginFailLabel.text = "아이디 또는 비밀번호가 다릅니다."
-            loginFailLabel.textColor = UIColor.red
-            loginFailLabel.tag = 102
-            
-            self.view.addSubview(loginFailLabel)
+            self.drawIndicator(activityIndicator: self.activityIndicator, isActive: false)
         }
     }
     
@@ -187,16 +189,71 @@ class LoginViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func loginCheck(id: String, pwd: String) -> Bool {
-        //HungryAPIManager.shared.getIdPwdApiData(option: "users", id: emailField.text, pass: passwordField.text, result: nil)
-        
-        //        for user in userModel.users {
-        //            if user.email == id && user.password == pwd {
-        //                return true // 로그인 성공
-        //            }
-        //        }
-        //        return false
-        return true
+    func getUserInfo(id: Int) {
+        print(#function)
+        HungryAPIManager.shared.getUserByID(id: String(id)) { code, json in
+            switch code {
+            case 200:
+                print("success")
+                let result = json["result"].stringValue
+                
+                let data = json["data"].arrayValue
+                let userID = data[0]["id"].intValue
+                let userEmail = data[0]["email"].stringValue
+                let userPhoneNum = data[0]["phone"].stringValue
+                
+                if result == "SUCCESS" {
+                    print("result success")
+                    self.userDefaults?.id = userEmail
+                    self.userDefaults?.index = String(userID)
+                    self.userDefaults?.phoneNum = userPhoneNum
+                } else {
+                    self.loginAvail = false
+                    print("fail")
+                }
+            case 400:
+                self.loginAvail = false
+                print("error")
+            default:
+                self.loginAvail = false
+                print("ERROR")
+            }
+        }
+    }
+    
+    func loginCheck(id: String, pwd: String) {
+        print(#function)
+        HungryAPIManager.shared.postLoginData(email: id, pass: pwd) { code, json in
+            
+            print(json)
+            print(code)
+            
+            let result = json["result"].stringValue
+            print(result)
+            
+            switch code {
+            case 200:
+                print("success")
+                let result = json["result"].stringValue
+                print("result : ", result)
+                
+                if result == "SUCCESS" {
+                    let data = json["data"].arrayValue
+                    let userID = data[0]["id"].intValue
+                    print("id : ", userID)
+                    self.loginAvail = true
+                    self.getUserInfo(id: userID)
+                } else {
+                    self.loginAvail = false
+                }
+            case 400:
+                self.loginAvail = false
+                print("error")
+            default:
+                self.loginAvail = false
+                print("ERROR")
+            }
+        }
     }
     
     @objc func textViewMoveUp(_ notification: NSNotification) {
@@ -223,7 +280,6 @@ class LoginViewController: UIViewController {
                 removable.removeFromSuperview()
             }
         } else {
-            showToast(message: "이메일 형식을 확인해 주세요")
             // emailField.viewWithTag(100)
         }
     }

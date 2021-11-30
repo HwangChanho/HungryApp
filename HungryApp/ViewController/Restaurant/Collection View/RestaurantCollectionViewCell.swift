@@ -14,25 +14,17 @@ class RestaurantCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var filterButton: UIButton!
     
+    var buttonActionHandler: (() -> ())?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
         filterButton.backgroundColor = .clear
-        filterButton.setTitleColor(.lightGray, for: .normal)
+        filterButton.setTitleColor(UIColor(named: "Color"), for: .normal)
     }
     
     @IBAction func filterButtonPressed(_ sender: UIButton) {
-        print("Pressed")
-        
-        if sender.isSelected {
-            filterButton.layer.borderWidth = 3
-            filterButton.layer.borderColor = UIColor.orange.cgColor
-            filterButton.layer.cornerRadius = 15
-            filterButton.backgroundColor = .orange
-        } else {
-            filterButton.layer.borderWidth = 1
-            filterButton.layer.borderColor = UIColor.clear.cgColor
-        }
+        buttonActionHandler?()
     }
     
 }
