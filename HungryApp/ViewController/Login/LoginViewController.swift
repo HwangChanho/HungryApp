@@ -48,6 +48,8 @@ class LoginViewController: UIViewController {
         // 유저 defaults에서 검사
         getUserDefaultsData()
         checkLoginBefore()
+        
+        searchIdPass.isHidden = true
     }
     
     func setTextField() {
