@@ -37,12 +37,15 @@ class DetailInfoCollectionViewCell: UICollectionViewCell {
         categoryNameLabel.font = .systemFont(ofSize: 15)
         
         addressLabel.font = .systemFont(ofSize: 15)
+        addressLabel.adjustsFontSizeToFitWidth = true
         
         imageButton.setTitle("", for: .normal)
         
         phoneButton.setTitle("", for: .normal)
         phoneButton.titleLabel?.textAlignment = .left
         phoneButton.titleLabel?.font = .systemFont(ofSize: 13)
+        
+        placeURLButton.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
     @IBAction func urlButtonPressed(_ sender: UIButton) {

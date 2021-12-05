@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     
     var aData: [addressDataByKeyworld] = [] // tableview 용
     var selectedData: addressDataByKeyworld?
-    var userData: [addressDataByKeyworld] = []
+    var userData: [addressDataByKeyworld] = [] // marker 용
     var totalCount = 0
     var page = 0
     var searchText = ""
@@ -48,6 +48,13 @@ class ViewController: UIViewController {
             showSelectedData(x: selectedData!.x, y: selectedData!.y)
         }
         setMarkerfromUserData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        print(#function)
+        userMarker.map{ $0.mapView = nil }
+        userMarker = []
+        userData = []
     }
     
     override func viewDidLoad() {
@@ -638,11 +645,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         
         print("selected Data : ", selectedData?.photo)
         
-        if selectedData?.photo![0] != "x" {
+        if selectedData?.photo != nil{
             let urlString = selectedData?.photo?[0] ?? ""
             print("urlString : ", urlString)
             
-            if urlString != "" {
+            if urlString != "" || selectedData?.photo![0] != "x" {
                 cell.imageLabel.kf.setImage(with: URL(string: urlString))
             } else {
                 cell.imageLabel.image = UIImage(named: "MainImage")

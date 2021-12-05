@@ -37,8 +37,22 @@
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="B2e-3b-wu6"/>
                                                 </constraints>
                                             </tableView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XDO-CL-gCe">
+                                                <rect key="frame" x="354" y="709" width="50" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="PMJ-hz-e8L"/>
+                                                    <constraint firstAttribute="width" constant="50" id="uPu-ic-GsB"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="NowPosition">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="10"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="nowLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="hly-oV-FEU"/>
+                                                </connections>
+                                            </button>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nkc-Qk-tvK">
-                                                <rect key="frame" x="5" y="594" width="404" height="170"/>
+                                                <rect key="frame" x="5" y="534" width="404" height="170"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="170" id="9lA-6l-Dfc"/>
@@ -60,20 +74,6 @@
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XDO-CL-gCe">
-                                                <rect key="frame" x="354" y="709" width="50" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="PMJ-hz-e8L"/>
-                                                    <constraint firstAttribute="width" constant="50" id="uPu-ic-GsB"/>
-                                                </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="NowPosition">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="10"/>
-                                                </buttonConfiguration>
-                                                <connections>
-                                                    <action selector="nowLocationButtonPressed:" destination="BYZ-38-t0r" eventType="touchDown" id="hly-oV-FEU"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -81,10 +81,10 @@
                                             <constraint firstItem="NNI-Qt-BWt" firstAttribute="top" secondItem="KHb-Yo-Olh" secondAttribute="top" constant="20" id="7JI-vn-MZD"/>
                                             <constraint firstAttribute="trailing" secondItem="XDO-CL-gCe" secondAttribute="trailing" constant="10" id="CCu-PZ-tas"/>
                                             <constraint firstAttribute="trailing" secondItem="nrK-iF-ONE" secondAttribute="trailing" constant="5" id="Fk1-d9-dzA"/>
+                                            <constraint firstItem="XDO-CL-gCe" firstAttribute="top" secondItem="nkc-Qk-tvK" secondAttribute="bottom" constant="5" id="IQS-Fk-iH8"/>
                                             <constraint firstItem="nrK-iF-ONE" firstAttribute="leading" secondItem="KHb-Yo-Olh" secondAttribute="leading" constant="5" id="IVn-hF-joW"/>
                                             <constraint firstAttribute="trailing" secondItem="NNI-Qt-BWt" secondAttribute="trailing" constant="20" id="IfG-7R-Gsp"/>
                                             <constraint firstAttribute="trailing" secondItem="nkc-Qk-tvK" secondAttribute="trailing" constant="5" id="JkA-ky-nlf"/>
-                                            <constraint firstAttribute="bottom" secondItem="nkc-Qk-tvK" secondAttribute="bottom" constant="5" id="Oxh-fp-m4W"/>
                                             <constraint firstAttribute="bottom" secondItem="XDO-CL-gCe" secondAttribute="bottom" constant="10" id="jM1-EE-ymV"/>
                                             <constraint firstItem="NNI-Qt-BWt" firstAttribute="leading" secondItem="KHb-Yo-Olh" secondAttribute="leading" constant="20" id="lyX-Co-z1S"/>
                                             <constraint firstItem="nkc-Qk-tvK" firstAttribute="leading" secondItem="KHb-Yo-Olh" secondAttribute="leading" constant="5" id="rew-10-OKl"/>

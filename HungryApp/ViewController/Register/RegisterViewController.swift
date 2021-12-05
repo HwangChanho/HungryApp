@@ -42,7 +42,8 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var titleLabel: UITextField!
-    @IBOutlet weak var addressLabel: UITextField!
+    // @IBOutlet weak var addressLabel: UITextField!
+    @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var textField: UITextView!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -130,7 +131,7 @@ class RegisterViewController: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         self.titleLabel.delegate = self
-        self.addressLabel.delegate = self
+        // self.addressLabel.delegate = self
         self.textField.delegate = self
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -150,17 +151,17 @@ class RegisterViewController: UIViewController {
         titleLabel.tag = 111
         titleLabel.text = selectedData.place_name ?? ""
         
-        addressLabel.placeholder = "주소 검색"
+        // addressLabel.placeholder = "주소"
         addressLabel.tintColor = .black
         addressLabel.textColor = .gray
-        addressLabel.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        addressLabel.tag = 112
+        //addressLabel.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        //addressLabel.tag = 112
         addressLabel.text = selectedData.address_name ?? ""
         
         textField.text = "리뷰작성"
         textField.textColor = .gray
         print("selected Data review : ", selectedData.review)
-        textField.text = selectedData.review ?? ""
+        textField.text = selectedData.review ?? "리뷰작성"
     }
     
     func setButton() {
@@ -168,7 +169,7 @@ class RegisterViewController: UIViewController {
         submitButton.tintColor = .white
         submitButton.layer.cornerRadius = 15
         submitButton.setTitle("등록", for: .normal)
-        if !selectedFromRestarantFlag {
+        if selectedFromRestarantFlag {
             submitButton.isHidden = true
         }
         
@@ -177,6 +178,7 @@ class RegisterViewController: UIViewController {
         categoryButton.setTitle(selectedData.category ?? "카테고리 선택", for: .normal)
         categoryButton.layer.cornerRadius = 10
         categoryButton.titleLabel?.font = .systemFont(ofSize: 15)
+        categoryButton.titleLabel?.adjustsFontSizeToFitWidth = true
     }
     
     //MARK: - Alert
@@ -218,10 +220,10 @@ class RegisterViewController: UIViewController {
             return
         }
         
-        if addressLabel.text == nil {
-            shakeTextField(textField: addressLabel)
-            return
-        }
+//        if addressLabel.text == nil {
+//            shakeTextField(textField: addressLabel)
+//            return
+//        }
         
         if titleLabel.text == nil || addressLabel.text == nil || categoryButton.titleLabel?.text == "카테고리 선택" {
             showToast(message: "등록되지 않은 필드가 존재 합니다.")
@@ -269,6 +271,8 @@ class RegisterViewController: UIViewController {
             drawIndicator(activityIndicator: activityIndicator, isActive: false)
         }
         
+        showToast(message: "등록 완료")
+        
         // 지도로 이동
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         
@@ -278,12 +282,15 @@ class RegisterViewController: UIViewController {
         vc.selectedData = selectedData
         vc.modalPresentationStyle = .fullScreen
         
-        // 이동전 등록된 데이터 삭제
-        self.titleLabel.text = ""
-        self.addressLabel.text = ""
-        self.images = []
-        self.textField.text = ""
-        self.categoryButton.setTitle("카테고리 선택", for: .normal)
+        if !selectedFromRestarantFlag {
+            // 이동전 등록된 데이터 삭제
+            self.titleLabel.text = ""
+            self.addressLabel.text = ""
+            self.images = []
+            self.textField.text = ""
+            self.categoryButton.setTitle("카테고리 선택", for: .normal)
+        }
+        
         selectedFromRestarantFlag = false
         
         self.navigationController?.pushViewController(vc, animated: true)
@@ -306,6 +313,7 @@ class RegisterViewController: UIViewController {
         case .restricted:
             print("restricted")
         case .denied:
+            photoSettingAlert()
             print("denied")
         case .authorized:
             self.present(self.picker, animated: true, completion: nil)
@@ -329,6 +337,7 @@ class RegisterViewController: UIViewController {
                 print("restricted")
             case .denied:
                 cameraSettingAlert()
+                print("denied")
             case .authorized:
                 self.present(self.picker, animated: true, completion: nil)
             case .limited:
@@ -387,15 +396,16 @@ class RegisterViewController: UIViewController {
                 tableView.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
                 tableView.leftAnchor.constraint(equalTo: titleLabel.rightAnchor),
             ])
-        } else {
-            NSLayoutConstraint.activate([
-                tableView.topAnchor.constraint(equalTo: self.addressLabel.bottomAnchor),
-                tableView.widthAnchor.constraint(equalToConstant: self.addressLabel.bounds.width),
-                tableView.heightAnchor.constraint(equalToConstant: 132),
-                tableView.leftAnchor.constraint(equalTo: addressLabel.leftAnchor),
-                tableView.leftAnchor.constraint(equalTo: addressLabel.rightAnchor),
-            ])
         }
+//        else {
+//            NSLayoutConstraint.activate([
+//                tableView.topAnchor.constraint(equalTo: self.addressLabel.bottomAnchor),
+//                tableView.widthAnchor.constraint(equalToConstant: self.addressLabel.bounds.width),
+//                tableView.heightAnchor.constraint(equalToConstant: 132),
+//                tableView.leftAnchor.constraint(equalTo: addressLabel.leftAnchor),
+//                tableView.leftAnchor.constraint(equalTo: addressLabel.rightAnchor),
+//            ])
+//        }
         
         searchText = textField.text!
         print("searchText : ", searchText)

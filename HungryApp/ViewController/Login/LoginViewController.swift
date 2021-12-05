@@ -173,9 +173,9 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func registerButtonPressed(_ sender: UIButton) {
-        print("register")
-        
         dismissObserver()
+        
+        print("register")
         
         let storyBoard = UIStoryboard(name: "Login", bundle: nil)
         

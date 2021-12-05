@@ -199,7 +199,11 @@ extension RestaurantViewController: UICollectionViewDelegate, UICollectionViewDa
         cell.filterButton.setTitle(row, for: .normal)
         cell.buttonActionHandler = {
             // row 값을 서버에 전송하여 필터링된 데이터를 받아옴
-            self.getUserStoreDataFromDB(category: row)
+            if indexPath.row == 0 {
+                self.getUserStoreDataFromDB(category: nil)
+            } else {
+                self.getUserStoreDataFromDB(category: row)
+            }
         }
         
         return cell

@@ -28,6 +28,24 @@ extension UIViewController {
         }
     }
     
+    func photoSettingAlert() {
+        if let appName = Bundle.main.infoDictionary!["CFBundleName"] as? String {
+            let alert = UIAlertController(title: "설정", message: "\(appName)이 (가) 사진 접근 허용되어 있지 않습니다. 설정화면으로 가시겠습니까?", preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "취소", style: .default) { (action) in
+                
+            }
+            let confirmAction = UIAlertAction(title: "확인", style: .default) { (action) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            }
+            
+            alert.addAction(cancelAction)
+            alert.addAction(confirmAction)
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            
+        }
+    }
+    
     func showToast(message : String, font: UIFont = UIFont.boldSystemFont(ofSize: 18)) {
         let width: CGFloat = 280
         let height: CGFloat = 70

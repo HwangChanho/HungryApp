@@ -96,6 +96,7 @@ class JoinViewController: UIViewController {
         joinButton.tintColor = .white
         joinButton.isHidden = true
         joinButton.layer.cornerRadius = 15
+        joinButton.titleLabel?.adjustsFontSizeToFitWidth = true
         
         emailCheckInfoLabel.font = .systemFont(ofSize: 12)
         emailCheckInfoLabel.isHidden = true
@@ -113,6 +114,11 @@ class JoinViewController: UIViewController {
         phoneNumCheckInfoLabel.sizeToFit()
         
         checkImage.isHidden = true
+        
+        emailDoubleCheck.titleLabel?.adjustsFontSizeToFitWidth = true
+        emailDoubleCheck.titleLabel?.numberOfLines = 1
+        phoneNumDoubleCheck.titleLabel?.adjustsFontSizeToFitWidth = true
+        phoneNumDoubleCheck.titleLabel?.numberOfLines = 1
     }
     
     @IBAction func emailDoubleCheckButtonPressed(_ sender: UIButton) {
@@ -172,8 +178,6 @@ class JoinViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
                                                  
-                                                 
-    
     func login() {
         phoneNum = phoneNumField.text!
         pass = passField.text!
@@ -188,6 +192,8 @@ class JoinViewController: UIViewController {
         
         self.saveUserDefaultsData()
         print("login : ", UserDefaultManager.shared.user)
+        
+        self.showToast(message: "가입완료 되었습니다.")
         
         // 로그인 성공시
         moveToMainView()

@@ -53,7 +53,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Br0-93-Ran">
-                                <rect key="frame" x="10" y="139" width="267" height="20"/>
+                                <rect key="frame" x="20" y="139" width="257" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="9ka-Au-8uw"/>
                                 </constraints>
@@ -96,7 +96,7 @@
                             <constraint firstItem="swK-Y2-Lsn" firstAttribute="trailing" secondItem="f0N-4b-j90" secondAttribute="trailing" id="ZlJ-JW-41b"/>
                             <constraint firstItem="py2-5U-OyH" firstAttribute="trailing" secondItem="f0N-4b-j90" secondAttribute="trailing" id="a7s-5a-hU9"/>
                             <constraint firstItem="PJx-Ug-Oxg" firstAttribute="leading" secondItem="ZQy-4V-nRP" secondAttribute="leading" constant="20" id="b84-Xq-Lxq"/>
-                            <constraint firstItem="Br0-93-Ran" firstAttribute="leading" secondItem="ZQy-4V-nRP" secondAttribute="leading" constant="10" id="cMr-6u-P3J"/>
+                            <constraint firstItem="Br0-93-Ran" firstAttribute="leading" secondItem="ZQy-4V-nRP" secondAttribute="leading" constant="20" id="cMr-6u-P3J"/>
                             <constraint firstItem="swK-Y2-Lsn" firstAttribute="leading" secondItem="ZQy-4V-nRP" secondAttribute="leading" constant="20" id="efu-QL-9FZ"/>
                             <constraint firstItem="f0N-4b-j90" firstAttribute="top" secondItem="PJx-Ug-Oxg" secondAttribute="bottom" constant="10" id="hEz-lE-vkt"/>
                             <constraint firstItem="swK-Y2-Lsn" firstAttribute="top" secondItem="py2-5U-OyH" secondAttribute="bottom" constant="10" id="hKi-g2-OJy"/>

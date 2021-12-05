@@ -106,6 +106,7 @@ class SettingViewController: UIViewController {
         case .restricted:
             print("restricted")
         case .denied:
+            photoSettingAlert()
             print("denied")
         case .authorized:
             self.present(self.picker, animated: true, completion: nil)
@@ -129,6 +130,7 @@ class SettingViewController: UIViewController {
                 print("restricted")
             case .denied:
                 cameraSettingAlert()
+                print("denied")
             case .authorized:
                 self.present(self.picker, animated: true, completion: nil)
             case .limited:
@@ -233,7 +235,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
-        case 0: // 설정
+        case 0: // 로그아웃
             UserDefaultManager.shared.user.id = ""
             UserDefaultManager.shared.user.pass = ""
             UserDefaultManager.shared.user.index = 0
