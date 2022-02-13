@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>ko_KR</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>&apos;배고파&apos; app would like to use your current location to display it on the app to find distance between user and restaurant. It is secure and private.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>&apos;배고파&apos; app would like to use your current location to display it on the app to find distance between user and restaurant. It is secure and private.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>&apos;배고파&apos; app would like to use your current location to display it on the app to find distance between user and restaurant. It is secure and private.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>&apos;배고파&apos; app would like to access your camera for your profile photo and food photo upload. Your photos wont be shared without your permission.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>&apos;배고파&apos; app would like to access your photo gallery for your profile photo and food photo upload. Your photos wont be shared without your permission.</string>
+	<key>NMFClientId</key>
+	<string>kb6hezrbam</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>Login</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+</dict>
+</plist>
