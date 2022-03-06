@@ -108,6 +108,12 @@ class RegisterViewController: UIViewController {
     
     func setStarImage() {
         stars.map{ $0.image = UIImage(systemName: "star") }
+        
+        print("stars : ", selectedData.rating)
+        
+        for i in 0 ..< Int(selectedData.rating) {
+            stars[i].image = UIImage(systemName: "star.fill")
+        }
     }
     
     func setTableView() {
@@ -160,7 +166,6 @@ class RegisterViewController: UIViewController {
         
         textField.text = "리뷰작성"
         textField.textColor = .gray
-        print("selected Data review : ", selectedData.review)
         textField.text = selectedData.review ?? "리뷰작성"
     }
     
@@ -169,9 +174,6 @@ class RegisterViewController: UIViewController {
         submitButton.tintColor = .white
         submitButton.layer.cornerRadius = 15
         submitButton.setTitle("등록", for: .normal)
-        if selectedFromRestarantFlag {
-            submitButton.isHidden = true
-        }
         
         categoryButton.tintColor = .white
         categoryButton.backgroundColor = UIColor(named: "Color")
