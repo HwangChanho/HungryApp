@@ -1,6 +1,4 @@
 # HungryApp
-<<<<<<< HEAD
-=======
 
 **요약**
 
@@ -32,4 +30,3 @@
 <br>
 - 단기간에 출시한 만큼 로직적으로 부족한 부분도 있지만, 빠르게 대안을 찾고 해결하는 능력을 기를수있는 좋은 기회였다.
 [배고파_출시발표.pdf](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/55602eef-3061-4f3a-962b-bc7ebbb99ef6/배고파_출시발표.pdf)
->>>>>>> b9d0c97a62ed884dd7c560e989a6cbe08bd252eb
